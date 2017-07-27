@@ -1,4 +1,4 @@
-# core
-Core stuff for Libra network system.
+# Libra network system
+This repository hosts core stuff for Libra network system.
 
-More information available on the wiki (https://github.com/libra-net/core/wiki)
+More information available on the wiki (https://github.com/libra-net/core/wiki).
