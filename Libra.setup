@@ -3021,7 +3021,7 @@
         <repositoryList
             name="Eclipse Neon">
           <repository
-              url="http://download.eclipse.org/releases/neon"/>
+              url="http://download.eclipse.org/releases/oxygen"/>
         </repositoryList>
       </targlet>
     </setupTask>
