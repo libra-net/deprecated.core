@@ -9,4 +9,16 @@ class SrvProviderTests4Java extends SrvProviderSpecs {
 		Assume.assumeTrue("TODO: auto-generated method stub", false)
 	}
 	
+	override s011_registration_ID() {
+		Assume.assumeTrue("TODO: auto-generated method stub", false)
+	}
+	
+	override s012_registration_entry() {
+		Assume.assumeTrue("TODO: auto-generated method stub", false)
+	}
+	
+	override s013_registration_options() {
+		Assume.assumeTrue("TODO: auto-generated method stub", false)
+	}
+	
 }
