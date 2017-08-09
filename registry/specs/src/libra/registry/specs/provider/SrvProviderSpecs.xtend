@@ -12,6 +12,7 @@ abstract class SrvProviderSpecs {
 	 * 
 	 * Input parameters for a service registration are:
 	 * - the service ID
+	 * - the service interface token
 	 * - an entry point
 	 * - some options
 	 */
