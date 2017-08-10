@@ -27,15 +27,22 @@ abstract class SrvProviderSpecs {
 	def abstract void s011_registration_ID();
 
 	/**
+	 * The interface token is a string reckoned from the corresponding JSON description file.
+	 * For more details, cf {@link libra.registry.specs.interfaces.InterfaceSpecs#s020_interfaceToken()}
+	 */
+	@Test
+	def abstract void s012_registration_interface();
+
+	/**
 	 * The entry point is a function to be called when a new service instance needs to be created.
 	 * This entry point must respect the required interface, and can't be null.
 	 */
 	@Test
-	def abstract void s012_registration_entry();
+	def abstract void s013_registration_entry();
 
 	/**
 	 * The registration options are boolean flags that can be enabled or disabled.
 	 */
 	@Test
-	def abstract void s013_registration_options();
+	def abstract void s014_registration_options();
 }
