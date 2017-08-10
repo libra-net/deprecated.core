@@ -1,4 +1,4 @@
-package libra.registry.specs.provider
+package libra.registry.specs.provider.implem4j
 
 import libra.registry.specs.provider.SrvProviderSpecs
 import org.junit.Assume
