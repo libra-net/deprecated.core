@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Plugin Management shell library
+Bundle-SymbolicName: libra.misc.pluginManager.sh
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Libra
+Bundle-ClassPath: lib/
+Require-Tool: xmlstarlet

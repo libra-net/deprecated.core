@@ -3018,6 +3018,12 @@
           name="Targlet for Libra">
         <requirement
             name="org.eclipse.xtend.sdk.feature.group"/>
+        <requirement
+            name="org.eclipse.jdt.annotation"/>
+        <requirement
+            name="org.apache.commons.lang3"/>
+        <requirement
+            name="org.apache.commons.io"/>
         <repositoryList
             name="Eclipse Neon">
           <repository
@@ -3032,6 +3038,12 @@
         <predicate
             xsi:type="predicates:LocationPredicate"
             pattern=".*/registry/.*"/>
+      </workingSet>
+      <workingSet
+          name="misc">
+        <predicate
+            xsi:type="predicates:LocationPredicate"
+            pattern=".*/misc/.*"/>
       </workingSet>
     </setupTask>
     <setupTask

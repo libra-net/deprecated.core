@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Plugin Manager library binding for Java
+Bundle-SymbolicName: libra.misc.pluginManager.java
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Libra
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: libra.misc.pluginManager.sh;bundle-version="1.0.0",
+ org.apache.commons.lang3,
+ org.apache.commons.io
+Export-Package: libra.misc.pluginManager

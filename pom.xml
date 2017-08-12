@@ -211,6 +211,7 @@
 	</build>
 	
 	<modules>
+		<module>misc</module>
 		<module>registry</module>
 	</modules>
 </project>

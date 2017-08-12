@@ -2,3 +2,6 @@
 /*/*/bin/
 /*/*/xtend-gen/
 /*/*/target/
+
+/*/*/*/bin/
+/*/*/*/target/
