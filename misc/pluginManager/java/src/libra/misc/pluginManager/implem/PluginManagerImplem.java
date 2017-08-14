@@ -2,6 +2,11 @@ package libra.misc.pluginManager.implem;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 import libra.misc.pluginManager.PluginManager;
 import libra.misc.pluginManager.wrapper.ExternalProcessWrapper;
@@ -10,6 +15,7 @@ public class PluginManagerImplem extends ExternalProcessWrapper implements Plugi
 
 	private static final String C = "-c";
 	private static final String BASH = "bash";
+	private static final String SHELL_LIST_SEPARATOR = ",";
 
 	@Override
 	public File getBundleDir(String bundleID) {
@@ -65,6 +71,19 @@ public class PluginManagerImplem extends ExternalProcessWrapper implements Plugi
 	@Override
 	public String getManifestSymbolicName(File bundleDir) {
 		return execProcess(BASH, C, loadPmShLib() + "pmGetManifestSymbolicName " + bundleDir.getAbsolutePath());
+	}
+
+	@Override
+	public List<String> getManifestRequiredTools(File bundleDir) {
+		List<String> out = Arrays
+				.asList(execProcess(BASH, C, loadPmShLib() + "pmGetManifestRequiredTools " + bundleDir.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
+
+		// If not dependency, prefer an empty list
+		if ((out.size() == 1) && StringUtils.isBlank(out.get(0))) {
+			out = new ArrayList<>();
+		}
+
+		return out;
 	}
 
 }

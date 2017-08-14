@@ -19,3 +19,12 @@ function pmGetEclipseProjectName {
 function pmGetManifestSymbolicName {
 	awk -F': ' '/^Bundle-SymbolicName: / {print $2}' "$1/META-INF/MANIFEST.MF"
 }
+
+##
+## Read the MANIFEST.MF file and print the required tools
+##
+## $1: bundle directory
+##
+function pmGetManifestRequiredTools {
+	awk -F': ' '/^Require-Tool: / {print $2}' "$1/META-INF/MANIFEST.MF"
+}

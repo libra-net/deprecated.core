@@ -1,6 +1,7 @@
 package libra.misc.pluginManager;
 
 import java.io.File;
+import java.util.List;
 
 import libra.misc.pluginManager.implem.PluginManagerImplem;
 
@@ -35,4 +36,12 @@ public interface PluginManager {
 	 */
 	String getManifestSymbolicName(File bundleDir);
 
+	/**
+	 * Gets the bundle required tools from the specified folder.
+	 * 
+	 * @param bundleDir
+	 *            Folder containing the bundle.
+	 * @return List of tools required by this bundle.
+	 */
+	List<String> getManifestRequiredTools(File bundleDir);
 }

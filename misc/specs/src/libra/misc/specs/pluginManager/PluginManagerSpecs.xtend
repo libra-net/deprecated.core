@@ -35,5 +35,14 @@ abstract class PluginManagerSpecs {
 	 */
 	@Test
 	def abstract void spec_getManifestSymbolicName();
+	
+	/**
+	 * Plugin Manager lib shall provide a method to get the list of required tools of a given bundle (from its directory).
+	 * "Tools" are external commands expected to be found on path (to be installed on the system as a prerequisite).
+	 * 
+	 * The method shall throw a runtime exception if the directory is not a bundle directory.
+	 */
+	@Test
+	def abstract void spec_getManifestRequiredTools();
 
 }
