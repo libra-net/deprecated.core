@@ -11,6 +11,12 @@ class PluginManagerTests4Java extends PluginManagerSpecs {
 	static val pm = PluginManager.INSTANCE
 	static val bundleID = "libra.misc.specs"
 	
+	override spec_getRootDir() {
+		// Normal case
+		var root = pm.getRootDir
+		Assert.assertTrue("Root dir not found: "+root.absolutePath, root.directory)
+	}
+	
 	override spec_getBundleDir() {
 		// Normal case
 		var d = pm.getBundleDir(bundleID)
@@ -45,6 +51,13 @@ class PluginManagerTests4Java extends PluginManagerSpecs {
 		} catch (UnsupportedOperationException e) {
 			// OK, expected behavior
 		}
+	}
+		
+	override spec_getAllBundleDirs() {
+		// Normal case
+		var bundles = pm.getAllBundleDirs(pm.rootDir)
+		Assert.assertFalse(bundles.empty)
+		bundles.forEach[Assert.assertTrue("Bundle dir not found: " + it.absolutePath,it.directory)]
 	}
 	
 	override spec_getEclipseProjectName() {

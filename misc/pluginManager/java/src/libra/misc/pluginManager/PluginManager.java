@@ -10,6 +10,13 @@ public interface PluginManager {
 	public static final PluginManager INSTANCE = new PluginManagerImplem();
 
 	/**
+	 * Gets the root directory for the running program.
+	 * 
+	 * @return Root directory for the running program.
+	 */
+	File getRootDir();
+
+	/**
 	 * Gets the required bundle directory from its ID
 	 * 
 	 * @param bundleID
@@ -17,6 +24,15 @@ public interface PluginManager {
 	 * @return Found bundle directory.
 	 */
 	File getBundleDir(String bundleID);
+
+	/**
+	 * Gets all the bundles for the current running program
+	 * 
+	 * @param rootDir
+	 *            Root directory for the running program
+	 * @return List of all bundle directories.
+	 */
+	List<File> getAllBundleDirs(File rootDir);
 
 	/**
 	 * Gets the Eclipse project name for the specified folder.

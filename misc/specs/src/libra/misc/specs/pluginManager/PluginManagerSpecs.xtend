@@ -13,12 +13,26 @@ import org.junit.Test
 abstract class PluginManagerSpecs {
 	
 	/**
+	 * Plugin Manager lib shall provide a method to get the current running program root directory.
+	 */
+	@Test
+	def abstract void spec_getRootDir();
+	
+	/**
 	 * Plugin Manager lib shall provide a method to get the file system directory of a given bundle.
 	 * 
 	 * The method shall throw a runtime exception if the bundle directory doesn't exist.
 	 */
 	@Test
 	def abstract void spec_getBundleDir();
+	
+	/**
+	 * Plugin Manager lib shall provide a method to get the list of all bundles for the required program root directory.
+	 * 
+	 * The method shall throw a runtime exception if no bundles are found.
+	 */
+	@Test
+	def abstract void spec_getAllBundleDirs();
 
 	/**
 	 * Plugin Manager lib shall provide a method to get the Eclipse project name of a given bundle (from its directory).

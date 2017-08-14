@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,10 +16,10 @@ public class PluginManagerImplem extends ExternalProcessWrapper implements Plugi
 
 	private static final String C = "-c";
 	private static final String BASH = "bash";
-	private static final String SHELL_LIST_SEPARATOR = ",";
+	private static final String SHELL_LIST_SEPARATOR = " ";
 
 	@Override
-	public File getBundleDir(String bundleID) {
+	public File getRootDir() {
 		// Get current code URL
 		URL c = PluginManagerImplem.class.getProtectionDomain().getCodeSource().getLocation();
 		System.err.println(c);
@@ -33,23 +34,40 @@ public class PluginManagerImplem extends ExternalProcessWrapper implements Plugi
 		if (sourceTreeIndex > 0) {
 			// Eclipse launch conf mode or Maven build (we have the complete source tree)
 			// Go up from some levels
-			File root = new File(absPath.substring(0, sourceTreeIndex));
-			File bundleDir = root;
-
-			// Use bundle ID to find directory (ignore fist segment)
-			String[] bundleIDsegments = bundleID.split("\\.");
-			for (int i = 1; i < bundleIDsegments.length; i++) {
-				bundleDir = new File(bundleDir, bundleIDsegments[i]);
-			}
-
-			// Verify we have found the bundle
-			if (!bundleDir.isDirectory() || !new File(bundleDir, "META-INF").isDirectory()) {
-				throw new UnsupportedOperationException("Can't find expected bundle path (" + bundleID + "); path not found: " + bundleDir);
-			}
-			return bundleDir;
+			return new File(absPath.substring(0, sourceTreeIndex));
 		}
 
-		throw new UnsupportedOperationException("Unsupported URL format");
+		// TODO Manage built software structure
+		throw new UnsupportedOperationException("Unsupported directory structure: " + absPath);
+	}
+
+	@Override
+	public File getBundleDir(String bundleID) {
+		// Get root directory
+		File root = getRootDir();
+		File bundleDir = root;
+
+		// TODO Detect/Manage built software structure
+
+		// Use bundle ID to find directory (ignore fist segment)
+		String[] bundleIDsegments = bundleID.split("\\.");
+		for (int i = 1; i < bundleIDsegments.length; i++) {
+			bundleDir = new File(bundleDir, bundleIDsegments[i]);
+		}
+
+		// Verify we have found the bundle
+		if (!bundleDir.isDirectory() || !new File(bundleDir, "META-INF").isDirectory()) {
+			throw new UnsupportedOperationException("Can't find expected bundle path (" + bundleID + "); path not found: " + bundleDir);
+		}
+		return bundleDir;
+	}
+
+	@Override
+	public List<File> getAllBundleDirs(File rootDir) {
+		List<String> out = Arrays.asList(execProcess(BASH, C, loadPmShLib() + "pmGetAllBundleDirs " + rootDir.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
+
+		// Map to files
+		return out.stream().map(File::new).collect(Collectors.toList());
 	}
 
 	private static String pmShLib = null;
