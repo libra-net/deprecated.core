@@ -107,4 +107,21 @@ class PluginManagerTests4Java extends PluginManagerSpecs {
 		Assert.assertEquals(0,requiredTools.size)
 	}
 	
+	override spec_checkTool() {
+		// Normal case
+		try {
+			pm.checkTool("awk")
+		} catch (UnsupportedOperationException e) {
+			Assert.fail("awk tool was expected to be installed on the system...")
+		}
+		
+		// Inexisting tool test
+		try {
+			pm.checkTool("unknownDummyTool")
+			Assert.fail("unknownDummyTool tool wasn't expected to be installed on the system...")
+		} catch (UnsupportedOperationException e) {
+			// OK, expected behavior
+		}
+	}
+	
 }

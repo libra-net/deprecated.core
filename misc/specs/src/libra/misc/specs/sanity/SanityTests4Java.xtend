@@ -30,4 +30,17 @@ class SanityTests4Java extends SanitySpecs {
 		}
 	}
 	
+	override spec_RequiredTools() {
+		var b = pm.getAllBundleDirs(pm.rootDir)
+		val tools = newHashSet
+		b.stream.flatMap[pm.getManifestRequiredTools(it).stream].forEach[tools.add(it)]
+		for (tool : tools) {
+			try {
+				pm.checkTool(tool)
+			} catch (UnsupportedOperationException e) {
+				Assert.fail("Required tool is not installed: " + tool)
+			}
+		}
+	}
+	
 }

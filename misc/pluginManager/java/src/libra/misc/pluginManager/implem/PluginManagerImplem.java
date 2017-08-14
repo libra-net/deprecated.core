@@ -104,4 +104,9 @@ public class PluginManagerImplem extends ExternalProcessWrapper implements Plugi
 		return out;
 	}
 
+	@Override
+	public void checkTool(String tool) {
+		execProcess(BASH, C, loadPmShLib() + "pmCheckTool " + tool);
+	}
+
 }

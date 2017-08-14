@@ -39,3 +39,12 @@ function pmGetManifestRequiredTools {
 function pmGetAllBundleDirs {
 	find "$1" -name META-INF | xargs | sed -e "s|/META-INF||g"
 }
+
+##
+## Verify if required tool is present on the system
+##
+## $1: required tool
+##
+function pmCheckTool {
+	which "$1" > /dev/null || (echo "Required command ($1) is not installed on the system." >&2; false)
+}

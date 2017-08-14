@@ -25,4 +25,10 @@ abstract class SanitySpecs {
 	@Test
 	def abstract void spec_BundleDirNameConsistency();
 
+	/**
+	 * For all bundles, required tools shall be installed on the development/build/test system
+	 */
+	@Test
+	def abstract void spec_RequiredTools();
+
 }

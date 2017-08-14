@@ -60,4 +60,13 @@ public interface PluginManager {
 	 * @return List of tools required by this bundle.
 	 */
 	List<String> getManifestRequiredTools(File bundleDir);
+
+	/**
+	 * Verifies if the required tool is installed on the system. A runtime exception will be launched if the tool is not installed.
+	 * 
+	 * @param bundleDir
+	 *            Tool to be verified.
+	 */
+	void checkTool(String tool);
+
 }

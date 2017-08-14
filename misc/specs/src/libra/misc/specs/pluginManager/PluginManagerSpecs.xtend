@@ -59,4 +59,12 @@ abstract class PluginManagerSpecs {
 	@Test
 	def abstract void spec_getManifestRequiredTools();
 
+	/**
+	 * Plugin Manager lib shall provide a method to check if a required tool is installed.
+	 * 
+	 * The method shall throw a runtime exception if the required tool is not installed on the system.
+	 */
+	@Test
+	def abstract void spec_checkTool();
+
 }
