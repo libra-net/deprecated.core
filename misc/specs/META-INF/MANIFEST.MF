@@ -11,5 +11,6 @@ Require-Bundle: com.google.guava,
  org.eclipse.xtend.lib.macro,
  org.junit,
  libra.misc.pluginManager.java;bundle-version="1.0.0",
- org.apache.commons.io
+ org.apache.commons.io,
+ org.apache.commons.lang3
 
