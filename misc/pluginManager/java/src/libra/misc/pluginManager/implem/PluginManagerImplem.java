@@ -92,6 +92,11 @@ public class PluginManagerImplem extends ExternalProcessWrapper implements Plugi
 	}
 
 	@Override
+	public String getManifestVendor(File bundleDir) {
+		return execProcess(BASH, C, loadPmShLib() + "pmGetManifestVendor " + bundleDir.getAbsolutePath());
+	}
+
+	@Override
 	public List<String> getManifestRequiredTools(File bundleDir) {
 		List<String> out = Arrays
 				.asList(execProcess(BASH, C, loadPmShLib() + "pmGetManifestRequiredTools " + bundleDir.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));

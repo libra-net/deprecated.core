@@ -88,6 +88,20 @@ class PluginManagerTests4Java extends PluginManagerSpecs {
 		}
 	}
 	
+	override spec_getManifestVendor() {
+		// Normal case
+		var vendor = pm.getManifestVendor(pm.getBundleDir(bundleID))
+		Assert.assertEquals("Libra", vendor)
+		
+		// Try with a non-bundle directory
+		try {
+			pm.getManifestVendor(new File("/tmp"))
+			Assert.fail("Get there while an exception was expected")
+		} catch (UnsupportedOperationException e) {
+			// OK, expected behavior
+		}
+	}
+	
 	override spec_getManifestRequiredTools() {
 		// Normal case
 		var requiredTools = pm.getManifestRequiredTools(pm.getBundleDir("libra.misc.pluginManager.sh"))

@@ -31,4 +31,10 @@ abstract class SanitySpecs {
 	@Test
 	def abstract void spec_RequiredTools();
 
+	/**
+	 * For all bundles, vendor must be set to "Libra"
+	 */
+	@Test
+	def abstract void spec_Vendor();
+
 }

@@ -43,12 +43,20 @@ abstract class PluginManagerSpecs {
 	def abstract void spec_getEclipseProjectName();
 	
 	/**
-	 * Plugin Manager lib shall provide a method to get the symbolic name (ID) name of a given bundle (from its directory).
+	 * Plugin Manager lib shall provide a method to get the symbolic name (ID) of a given bundle (from its directory).
 	 * 
 	 * The method shall throw a runtime exception if the directory is not a bundle directory.
 	 */
 	@Test
 	def abstract void spec_getManifestSymbolicName();
+	
+	/**
+	 * Plugin Manager lib shall provide a method to get the vendor of a given bundle (from its directory).
+	 * 
+	 * The method shall throw a runtime exception if the directory is not a bundle directory.
+	 */
+	@Test
+	def abstract void spec_getManifestVendor();
 	
 	/**
 	 * Plugin Manager lib shall provide a method to get the list of required tools of a given bundle (from its directory).

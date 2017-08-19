@@ -53,6 +53,15 @@ public interface PluginManager {
 	String getManifestSymbolicName(File bundleDir);
 
 	/**
+	 * Gets the bundle vendor from the specified folder.
+	 * 
+	 * @param bundleDir
+	 *            Folder containing the bundle.
+	 * @return Bundle vendor.
+	 */
+	String getManifestVendor(File bundleDir);
+
+	/**
 	 * Gets the bundle required tools from the specified folder.
 	 * 
 	 * @param bundleDir

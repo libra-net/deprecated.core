@@ -22,6 +22,15 @@ function pmGetManifestSymbolicName {
 }
 
 ##
+## Read the MANIFEST.MF file and print the bundle vendor
+##
+## $1: bundle directory
+##
+function pmGetManifestVendor {
+	awk -F': ' '/^Bundle-Vendor: / {print $2}' "$1/META-INF/MANIFEST.MF"
+}
+
+##
 ## Read the MANIFEST.MF file and print the required tools (list)
 ##
 ## $1: bundle directory
