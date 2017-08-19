@@ -71,6 +71,15 @@ public interface PluginManager {
 	List<String> getManifestRequiredTools(File bundleDir);
 
 	/**
+	 * Gets the bundle required bundles from the specified folder.
+	 * 
+	 * @param bundleDir
+	 *            Folder containing the bundle.
+	 * @return List of bundles required by this bundle.
+	 */
+	List<String> getManifestRequiredBundles(File bundleDir);
+
+	/**
 	 * Verifies if the required tool is installed on the system. A runtime exception will be launched if the tool is not installed.
 	 * 
 	 * @param bundleDir

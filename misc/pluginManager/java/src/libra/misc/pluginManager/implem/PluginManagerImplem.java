@@ -96,17 +96,27 @@ public class PluginManagerImplem extends ExternalProcessWrapper implements Plugi
 		return execProcess(BASH, C, loadPmShLib() + "pmGetManifestVendor " + bundleDir.getAbsolutePath());
 	}
 
+	private List<String> sanitizeList(List<String> out) {
+		List<String> newList = out;
+		// If just an empty first element, prefer an empty list
+		if ((out.size() == 1) && StringUtils.isBlank(out.get(0))) {
+			newList = new ArrayList<>();
+		}
+		return newList;
+	}
+
 	@Override
 	public List<String> getManifestRequiredTools(File bundleDir) {
 		List<String> out = Arrays
 				.asList(execProcess(BASH, C, loadPmShLib() + "pmGetManifestRequiredTools " + bundleDir.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
+		return sanitizeList(out);
+	}
 
-		// If not dependency, prefer an empty list
-		if ((out.size() == 1) && StringUtils.isBlank(out.get(0))) {
-			out = new ArrayList<>();
-		}
-
-		return out;
+	@Override
+	public List<String> getManifestRequiredBundles(File bundleDir) {
+		List<String> out = Arrays
+				.asList(execProcess(BASH, C, loadPmShLib() + "pmGetManifestRequiredBundles " + bundleDir.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
+		return sanitizeList(out);
 	}
 
 	@Override

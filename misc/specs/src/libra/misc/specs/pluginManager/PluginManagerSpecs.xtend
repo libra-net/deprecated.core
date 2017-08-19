@@ -66,6 +66,14 @@ abstract class PluginManagerSpecs {
 	 */
 	@Test
 	def abstract void spec_getManifestRequiredTools();
+	
+	/**
+	 * Plugin Manager lib shall provide a method to get the list of required bundles of a given bundle (from its directory).
+	 * 
+	 * The method shall throw a runtime exception if the directory is not a bundle directory.
+	 */
+	@Test
+	def abstract void spec_getManifestRequiredBundles();
 
 	/**
 	 * Plugin Manager lib shall provide a method to check if a required tool is installed.

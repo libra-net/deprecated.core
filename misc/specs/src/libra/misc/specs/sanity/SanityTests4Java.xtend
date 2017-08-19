@@ -8,28 +8,28 @@ import org.apache.commons.lang3.StringUtils
 class SanityTests4Java extends SanitySpecs {
 
 	static val pm = PluginManager.INSTANCE
-	
+
 	override spec_AllBundles() {
 		var b = pm.getAllBundleDirs(pm.rootDir)
 		Assert.assertEquals(4, b.size)
 	}
-	
+
 	override spec_BundleProjectConsistency() {
 		var b = pm.getAllBundleDirs(pm.rootDir)
 		b.forEach[Assert.assertEquals(pm.getEclipseProjectName(it), pm.getManifestSymbolicName(it))]
 	}
-	
+
 	override spec_BundleDirNameConsistency() {
 		var b = pm.getAllBundleDirs(pm.rootDir)
 		for (dir : b) {
 			var bundleID = pm.getManifestSymbolicName(dir)
 			var segments = newArrayList(bundleID.split("\\."))
 			segments.remove(0)
-			var expectedPath = pm.rootDir.absolutePath + "/" + StringUtils.join(segments,"/")
+			var expectedPath = pm.rootDir.absolutePath + "/" + StringUtils.join(segments, "/")
 			Assert.assertEquals(expectedPath, dir.absolutePath)
 		}
 	}
-	
+
 	override spec_RequiredTools() {
 		var b = pm.getAllBundleDirs(pm.rootDir)
 		val tools = newHashSet
@@ -42,10 +42,41 @@ class SanityTests4Java extends SanitySpecs {
 			}
 		}
 	}
-	
+
 	override spec_Vendor() {
 		var b = pm.getAllBundleDirs(pm.rootDir)
-		b.forEach[Assert.assertEquals("Unexpected vendor for bundle " + it.absolutePath, "Libra", pm.getManifestVendor(it))]
+		b.forEach [
+			Assert.assertEquals("Unexpected vendor for bundle " + it.absolutePath, "Libra", pm.getManifestVendor(it))
+		]
 	}
-	
+
+	override spec_RequiredBundles_NoEclipse() {
+		var b = pm.getAllBundleDirs(pm.rootDir)
+		for (dir : b) {
+			val bID = pm.getManifestSymbolicName(dir)
+			if (!bID.endsWith(".specs")) {
+				var bundles = pm.getManifestRequiredBundles(dir)
+				var reqs = newArrayList("org.eclipse", "org.junit")
+				for (req : reqs) {
+					bundles.forEach [
+						Assert.assertFalse("Unexpected bundle dependency for " + bID + ": " + it, it.startsWith(req))
+					]
+				}
+			}
+		}
+	}
+
+	override spec_RequiredBundles_sh() {
+		var b = pm.getAllBundleDirs(pm.rootDir)
+		for (dir : b) {
+			val bID = pm.getManifestSymbolicName(dir)
+			if (bID.endsWith(".sh")) {
+				var bundles = pm.getManifestRequiredBundles(dir)
+				bundles.forEach [
+					Assert.assertTrue("Unexpected bundle dependency for " + bID + ": " + it, it.endsWith(".sh"))
+				]
+			}
+		}
+	}
+
 }

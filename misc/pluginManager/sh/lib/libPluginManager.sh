@@ -41,6 +41,16 @@ function pmGetManifestRequiredTools {
 }
 
 ##
+## Read the MANIFEST.MF file and print the required bundles (list)
+##
+## $1: bundle directory
+##
+function pmGetManifestRequiredBundles {
+	awk -F' ' '/^Require-Bundle: / {line=NR;buff=$2} /^ / {if(NR==(line+1)){line=NR;buff=buff $1}} END {print buff}' "$1/META-INF/MANIFEST.MF" > /tmp/$$
+	cat /tmp/$$ | sed -e 's/,/ /g;s/;[^ ]*//g'
+}
+
+##
 ## Get all bundle directories for the running program (list)
 ##
 ## $1: root directory for running program

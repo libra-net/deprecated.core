@@ -121,6 +121,25 @@ class PluginManagerTests4Java extends PluginManagerSpecs {
 		Assert.assertEquals(0,requiredTools.size)
 	}
 	
+	override spec_getManifestRequiredBundles() {
+		// Normal case
+		var requiredTools = pm.getManifestRequiredBundles(pm.getBundleDir(bundleID))
+		Assert.assertEquals(8,requiredTools.size)
+		Assert.assertTrue(requiredTools.contains("libra.misc.pluginManager.java"))
+
+		// Try with a non-bundle directory
+		try {
+			pm.getManifestRequiredBundles(new File("/tmp"))
+			Assert.fail("Get there while an exception was expected")
+		} catch (UnsupportedOperationException e) {
+			// OK, expected behavior
+		}
+		
+		// Try with an empty dependency list
+		requiredTools = pm.getManifestRequiredBundles(pm.getBundleDir("libra.misc.pluginManager.sh"))
+		Assert.assertEquals(0,requiredTools.size)
+	}
+
 	override spec_checkTool() {
 		// Normal case
 		try {

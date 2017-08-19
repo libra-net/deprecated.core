@@ -37,4 +37,18 @@ abstract class SanitySpecs {
 	@Test
 	def abstract void spec_Vendor();
 
+	/**
+	 * For non-test bundles, required bundles shall not include:
+	 * - Eclipse bundles
+	 * - JUnit bundles
+	 */
+	@Test
+	def abstract void spec_RequiredBundles_NoEclipse();
+
+	/**
+	 * For sh bundles, required bundles shall not include non-sh bundles
+	 */
+	@Test
+	def abstract void spec_RequiredBundles_sh();
+
 }
