@@ -31,6 +31,15 @@ function pmGetManifestVendor {
 }
 
 ##
+## Read the MANIFEST.MF file and print the bundle version
+##
+## $1: bundle directory
+##
+function pmGetManifestVersion {
+	awk -F': ' '/^Bundle-Version: / {print $2}' "$1/META-INF/MANIFEST.MF"
+}
+
+##
 ## Read the MANIFEST.MF file and print the required tools (list)
 ##
 ## $1: bundle directory

@@ -38,6 +38,12 @@ abstract class SanitySpecs {
 	def abstract void spec_Vendor();
 
 	/**
+	 * For all bundles, versions must be consistent
+	 */
+	@Test
+	def abstract void spec_Version();
+
+	/**
 	 * For non-test bundles, required bundles shall not include:
 	 * - Eclipse bundles
 	 * - JUnit bundles

@@ -62,6 +62,15 @@ public interface PluginManager {
 	String getManifestVendor(File bundleDir);
 
 	/**
+	 * Gets the bundle version from the specified folder.
+	 * 
+	 * @param bundleDir
+	 *            Folder containing the bundle.
+	 * @return Bundle version.
+	 */
+	String getManifestVersion(File bundleDir);
+
+	/**
 	 * Gets the bundle required tools from the specified folder.
 	 * 
 	 * @param bundleDir

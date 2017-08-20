@@ -49,6 +49,13 @@ class SanityTests4Java extends SanitySpecs {
 			Assert.assertEquals("Unexpected vendor for bundle " + it.absolutePath, "Libra", pm.getManifestVendor(it))
 		]
 	}
+	
+	override spec_Version() {
+		var b = pm.getAllBundleDirs(pm.rootDir)
+		b.forEach [
+			Assert.assertEquals("Unexpected version for bundle " + it.absolutePath, "1.0.0.qualifier", pm.getManifestVersion(it))
+		]
+	}
 
 	override spec_RequiredBundles_NoEclipse() {
 		var b = pm.getAllBundleDirs(pm.rootDir)

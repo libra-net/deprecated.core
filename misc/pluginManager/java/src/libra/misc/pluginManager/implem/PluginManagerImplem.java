@@ -96,6 +96,11 @@ public class PluginManagerImplem extends ExternalProcessWrapper implements Plugi
 		return execProcess(BASH, C, loadPmShLib() + "pmGetManifestVendor " + bundleDir.getAbsolutePath());
 	}
 
+	@Override
+	public String getManifestVersion(File bundleDir) {
+		return execProcess(BASH, C, loadPmShLib() + "pmGetManifestVersion " + bundleDir.getAbsolutePath());
+	}
+
 	private List<String> sanitizeList(List<String> out) {
 		List<String> newList = out;
 		// If just an empty first element, prefer an empty list
