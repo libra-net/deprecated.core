@@ -67,6 +67,14 @@ abstract class PluginManagerSpecs {
 	def abstract void spec_getManifestVersion();
 	
 	/**
+	 * Plugin Manager lib shall provide a method to get the shape (jar or dir) of a given bundle (from its directory).
+	 * 
+	 * The method shall throw a runtime exception if the directory is not a bundle directory.
+	 */
+	@Test
+	def abstract void spec_isManifestDirShape();
+	
+	/**
 	 * Plugin Manager lib shall provide a method to get the list of required tools of a given bundle (from its directory).
 	 * "Tools" are external commands expected to be found on path (to be installed on the system as a prerequisite).
 	 * 

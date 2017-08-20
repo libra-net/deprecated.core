@@ -6,3 +6,4 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Libra
 Bundle-ClassPath: lib/
 Require-Tool: xmlstarlet
+Eclipse-BundleShape: dir

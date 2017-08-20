@@ -71,6 +71,15 @@ public interface PluginManager {
 	String getManifestVersion(File bundleDir);
 
 	/**
+	 * Checks the bundle shape (jar or dir) from the specified folder.
+	 * 
+	 * @param bundleDir
+	 *            Folder containing the bundle.
+	 * @return true if bundle shape is dir, false otherwise
+	 */
+	boolean isManifestDirShape(File bundleDir);
+
+	/**
 	 * Gets the bundle required tools from the specified folder.
 	 * 
 	 * @param bundleDir

@@ -56,6 +56,16 @@ class SanityTests4Java extends SanitySpecs {
 			Assert.assertEquals("Unexpected version for bundle " + it.absolutePath, "1.0.0.qualifier", pm.getManifestVersion(it))
 		]
 	}
+	
+	override spec_DirBundleShape() {
+		var b = pm.getAllBundleDirs(pm.rootDir)
+		for (dir : b) {
+			val bID = pm.getManifestSymbolicName(dir)
+			if (bID.endsWith(".sh")) {
+				Assert.assertTrue("Unexpected bundle shape for " + bID, pm.isManifestDirShape(dir))
+			}
+		}
+	}
 
 	override spec_RequiredBundles_NoEclipse() {
 		var b = pm.getAllBundleDirs(pm.rootDir)

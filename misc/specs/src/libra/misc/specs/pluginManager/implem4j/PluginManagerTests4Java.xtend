@@ -10,6 +10,7 @@ class PluginManagerTests4Java extends PluginManagerSpecs {
 	
 	static val pm = PluginManager.INSTANCE
 	static val bundleID = "libra.misc.specs"
+	static val bundleID_pm_sh = "libra.misc.pluginManager.sh"
 	
 	override spec_getRootDir() {
 		// Normal case
@@ -116,9 +117,25 @@ class PluginManagerTests4Java extends PluginManagerSpecs {
 		}
 	}
 	
+	override spec_isManifestDirShape() {
+		// Normal case
+		var dirShape = pm.isManifestDirShape(pm.getBundleDir(bundleID))
+		Assert.assertFalse(dirShape)
+		dirShape = pm.isManifestDirShape(pm.getBundleDir(bundleID_pm_sh))
+		Assert.assertTrue(dirShape)
+		
+		// Try with a non-bundle directory
+		try {
+			pm.isManifestDirShape(new File("/tmp"))
+			Assert.fail("Get there while an exception was expected")
+		} catch (UnsupportedOperationException e) {
+			// OK, expected behavior
+		}
+	}
+	
 	override spec_getManifestRequiredTools() {
 		// Normal case
-		var requiredTools = pm.getManifestRequiredTools(pm.getBundleDir("libra.misc.pluginManager.sh"))
+		var requiredTools = pm.getManifestRequiredTools(pm.getBundleDir(bundleID_pm_sh))
 		Assert.assertEquals(1,requiredTools.size)
 		Assert.assertEquals("xmlstarlet",requiredTools.get(0))
 
@@ -150,7 +167,7 @@ class PluginManagerTests4Java extends PluginManagerSpecs {
 		}
 		
 		// Try with an empty dependency list
-		requiredTools = pm.getManifestRequiredBundles(pm.getBundleDir("libra.misc.pluginManager.sh"))
+		requiredTools = pm.getManifestRequiredBundles(pm.getBundleDir(bundleID_pm_sh))
 		Assert.assertEquals(0,requiredTools.size)
 	}
 

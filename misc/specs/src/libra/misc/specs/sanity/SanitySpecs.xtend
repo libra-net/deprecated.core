@@ -44,6 +44,12 @@ abstract class SanitySpecs {
 	def abstract void spec_Version();
 
 	/**
+	 * For sh bundles, Eclipse dir shape must be used
+	 */
+	@Test
+	def abstract void spec_DirBundleShape();
+
+	/**
 	 * For non-test bundles, required bundles shall not include:
 	 * - Eclipse bundles
 	 * - JUnit bundles

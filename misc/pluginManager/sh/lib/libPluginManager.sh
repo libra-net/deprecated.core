@@ -40,6 +40,16 @@ function pmGetManifestVersion {
 }
 
 ##
+## Read the MANIFEST.MF file and print the bundle shape (jar or dir)
+## Default value (empty) is assumed to be jar
+##
+## $1: bundle directory
+##
+function pmGetManifestShape {
+	awk -F': ' '/^Eclipse-BundleShape: / {print $2}' "$1/META-INF/MANIFEST.MF"
+}
+
+##
 ## Read the MANIFEST.MF file and print the required tools (list)
 ##
 ## $1: bundle directory
@@ -65,7 +75,7 @@ function pmGetManifestRequiredBundles {
 ## $1: root directory for running program
 ##
 function pmGetAllBundleDirs {
-	find "$1" -name META-INF | xargs | sed -e "s|/META-INF||g"
+	find "$1" -name META-INF ! -regex ".*/target/work/plugins/.*" | xargs | sed -e "s|/META-INF||g"
 }
 
 ##
