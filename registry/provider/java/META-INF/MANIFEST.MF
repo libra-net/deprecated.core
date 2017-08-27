@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Java Implementation for the registry provider
+Bundle-SymbolicName: libra.registry.provider.java
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Libra
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.apache.commons.lang3;bundle-version="3.1.0"
