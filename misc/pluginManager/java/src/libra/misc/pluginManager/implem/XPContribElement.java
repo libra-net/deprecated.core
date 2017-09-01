@@ -17,11 +17,11 @@ public class XPContribElement implements XPContrib {
 		this.contribNode = contribNode;
 	}
 
-	public File getpXml() {
+	File getpXml() {
 		return pXml;
 	}
 
-	public Node getContribNode() {
+	Node getContribNode() {
 		return contribNode;
 	}
 

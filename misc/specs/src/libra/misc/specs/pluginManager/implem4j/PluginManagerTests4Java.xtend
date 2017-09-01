@@ -25,9 +25,9 @@ class PluginManagerTests4Java extends PluginManagerSpecs {
 		
 		// Verify identifier in Manifest
 		var m = new File (d, "META-INF/MANIFEST.MF")
-		Assert.assertTrue("Manifest not found: "+m.absolutePath,d.isDirectory)
+		Assert.assertTrue("Manifest not found: "+m.absolutePath,m.isFile)
 		Assert.assertTrue("Bundle ID not found in Manifest: "+m.absolutePath,
-			FileUtils.readLines(m).stream.filter[equals("Bundle-SymbolicName: "+bundleID)].findAny.present)
+			FileUtils.readLines(m).stream.filter[startsWith("Bundle-SymbolicName: "+bundleID)].findAny.present)
 		
 		// Try with an unknown bundle
 		try {

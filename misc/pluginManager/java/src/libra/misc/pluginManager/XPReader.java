@@ -1,6 +1,9 @@
 package libra.misc.pluginManager;
 
 import java.util.List;
+import java.util.Optional;
+
+import libra.misc.pluginManager.implem.XPReaderImplem;
 
 /**
  * Extension Point reader interface
@@ -9,6 +12,8 @@ import java.util.List;
  *
  */
 public interface XPReader {
+
+	static final XPReader INSTANCE = new XPReaderImplem();
 
 	/**
 	 * Interface used to manipulate contributions
@@ -30,14 +35,25 @@ public interface XPReader {
 	List<XPContrib> getContributions(String xpID);
 
 	/**
+	 * Gets the required contribution sub-elements from the required contribution
+	 * 
+	 * @param contrib
+	 *            Contribution instance
+	 * @param name
+	 *            Name of the contribution sub-element(s) to be found
+	 * @return Found parameter value
+	 */
+	List<XPContrib> getElements(XPContrib contrib, String name);
+
+	/**
 	 * Gets the required String attribute from the required contribution
 	 * 
 	 * @param contrib
 	 *            Contribution instance
-	 * @param path
-	 *            Path to the parameter from which to get the value
+	 * @param name
+	 *            Name of the attribute from which to get the value
 	 * @return Found parameter value
 	 */
-	String getStringAttribute(XPContrib contrib, String path);
+	Optional<String> getStringAttribute(XPContrib contrib, String name);
 
 }

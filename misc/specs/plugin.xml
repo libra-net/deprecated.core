@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="foo" name="Foo" schema="schema/foo.exsd"/>
+   <extension
+         point="libra.misc.specs.foo">
+      <testElement attr1="testValue1"/>
+      <testElement attr1="testValue2"/>
+   </extension>
+
+</plugin>

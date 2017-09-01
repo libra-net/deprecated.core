@@ -18,7 +18,8 @@ function pmGetEclipseProjectName {
 ## $1: bundle directory
 ##
 function pmGetManifestSymbolicName {
-	awk -F': ' '/^Bundle-SymbolicName: / {print $2}' "$1/META-INF/MANIFEST.MF"
+	awk -F': ' '/^Bundle-SymbolicName: / {print $2}' "$1/META-INF/MANIFEST.MF" > /tmp/$$
+	cat /tmp/$$ | sed -e 's/;[^ ]*//g'
 }
 
 ##
