@@ -23,7 +23,9 @@ public interface IRegistryProvider {
 	 * @param interfaceToken
 	 *            Interface token, got from the generated interface code
 	 * @param entryPoint
-	 *            Entry point interface, to be called when a new service instance is requedted
+	 *            Entry point interface, to be called when a new service instance is requested
+	 * @param implem
+	 *            Implementation language
 	 */
-	void registerService(String ID, String interfaceToken, IService entryPoint);
+	void registerService(String ID, String interfaceToken, IService entryPoint, ServiceImplem implem);
 }

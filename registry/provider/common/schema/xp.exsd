@@ -78,6 +78,21 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="implem" use="required">
+            <annotation>
+               <documentation>
+                  Implementation language for this service.
+               </documentation>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <enumeration value="java">
+                  </enumeration>
+                  <enumeration value="sh">
+                  </enumeration>
+               </restriction>
+            </simpleType>
+         </attribute>
       </complexType>
    </element>
 

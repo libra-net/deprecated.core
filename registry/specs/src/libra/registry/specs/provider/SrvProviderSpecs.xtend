@@ -14,6 +14,7 @@ abstract class SrvProviderSpecs {
 	 * - the service ID
 	 * - the service interface token
 	 * - an entry point
+	 * - the implementation language ID
 	 * - some options
 	 */
 	@Test
