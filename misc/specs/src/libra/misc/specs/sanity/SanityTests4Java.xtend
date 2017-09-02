@@ -11,7 +11,7 @@ class SanityTests4Java extends SanitySpecs {
 
 	override spec_AllBundles() {
 		var b = pm.getAllBundleDirs(pm.rootDir)
-		Assert.assertEquals(7, b.size)
+		Assert.assertEquals(8, b.size)
 	}
 
 	override spec_BundleProjectConsistency() {

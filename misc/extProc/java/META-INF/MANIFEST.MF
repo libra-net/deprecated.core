@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: External processes handling for Java
+Bundle-SymbolicName: libra.misc.extProc.java
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Libra
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: libra.misc.extProc
+Require-Bundle: org.apache.commons.lang3,
+ org.apache.commons.io

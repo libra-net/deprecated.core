@@ -7,5 +7,6 @@ Bundle-Vendor: Libra
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: libra.misc.pluginManager.sh;bundle-version="1.0.0",
  org.apache.commons.lang3,
- org.apache.commons.io
+ org.apache.commons.io,
+ libra.misc.extProc.java;bundle-version="1.0.0"
 Export-Package: libra.misc.pluginManager

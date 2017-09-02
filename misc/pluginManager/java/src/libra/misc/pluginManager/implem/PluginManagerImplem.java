@@ -2,21 +2,14 @@ package libra.misc.pluginManager.implem;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
-
+import libra.misc.extProc.ShLibProcessWrapper;
 import libra.misc.pluginManager.PluginManager;
-import libra.misc.pluginManager.wrapper.ExternalProcessWrapper;
 
-public class PluginManagerImplem extends ExternalProcessWrapper implements PluginManager {
-
-	private static final String C = "-c";
-	private static final String BASH = "bash";
-	private static final String SHELL_LIST_SEPARATOR = " ";
+public class PluginManagerImplem extends ShLibProcessWrapper implements PluginManager {
 
 	@Override
 	public File getRootDir() {
@@ -62,76 +55,67 @@ public class PluginManagerImplem extends ExternalProcessWrapper implements Plugi
 		return bundleDir;
 	}
 
+	private static File pmShLib = null;
+
+	private File loadPmShLib() {
+		if (pmShLib == null) {
+			final File bundleDir = getBundleDir("libra.misc.pluginManager.sh");
+			final String classPath = "lib"; // Hard-coded classpath here... Chicken and egg situation otherwise.
+			pmShLib = new File(new File(bundleDir, classPath), "libPluginManager.sh");
+		}
+		return pmShLib;
+	}
+
 	@Override
 	public List<File> getAllBundleDirs(File rootDir) {
-		List<String> out = Arrays.asList(execProcess(BASH, C, loadPmShLib() + "pmGetAllBundleDirs " + rootDir.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
-
+		List<String> out = Arrays.asList(execShLibFunction(loadPmShLib(), "pmGetAllBundleDirs", rootDir.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
+	
 		// Map to files
 		return out.stream().map(File::new).collect(Collectors.toList());
 	}
 
-	private static String pmShLib = null;
-
-	private String loadPmShLib() {
-		if (pmShLib == null) {
-			final File bundleDir = getBundleDir("libra.misc.pluginManager.sh");
-			final String classPath = "lib"; // Hard-coded classpath here... Chicken and egg situation otherwise.
-			pmShLib = new File(new File(bundleDir, classPath), "libPluginManager.sh").getAbsolutePath();
-		}
-		return "source " + pmShLib + "; ";
-	}
-
 	@Override
 	public String getEclipseProjectName(File bundleDir) {
-		return execProcess(BASH, C, loadPmShLib() + "pmGetEclipseProjectName " + bundleDir.getAbsolutePath());
+		return execShLibFunction(loadPmShLib(), "pmGetEclipseProjectName", bundleDir.getAbsolutePath());
 	}
 
 	@Override
 	public String getManifestSymbolicName(File bundleDir) {
-		return execProcess(BASH, C, loadPmShLib() + "pmGetManifestSymbolicName " + bundleDir.getAbsolutePath());
+		return execShLibFunction(loadPmShLib(), "pmGetManifestSymbolicName", bundleDir.getAbsolutePath());
 	}
 
 	@Override
 	public String getManifestVendor(File bundleDir) {
-		return execProcess(BASH, C, loadPmShLib() + "pmGetManifestVendor " + bundleDir.getAbsolutePath());
+		return execShLibFunction(loadPmShLib(), "pmGetManifestVendor", bundleDir.getAbsolutePath());
 	}
 
 	@Override
 	public String getManifestVersion(File bundleDir) {
-		return execProcess(BASH, C, loadPmShLib() + "pmGetManifestVersion " + bundleDir.getAbsolutePath());
+		return execShLibFunction(loadPmShLib(), "pmGetManifestVersion", bundleDir.getAbsolutePath());
 	}
 
 	@Override
 	public boolean isManifestDirShape(File bundleDir) {
-		return execProcess(BASH, C, loadPmShLib() + "pmGetManifestShape " + bundleDir.getAbsolutePath()).equals("dir");
-	}
-
-	private List<String> sanitizeList(List<String> out) {
-		List<String> newList = out;
-		// If just an empty first element, prefer an empty list
-		if ((out.size() == 1) && StringUtils.isBlank(out.get(0))) {
-			newList = new ArrayList<>();
-		}
-		return newList;
+		return execShLibFunction(loadPmShLib(), "pmGetManifestShape", bundleDir.getAbsolutePath()).equals("dir");
 	}
 
 	@Override
 	public List<String> getManifestRequiredTools(File bundleDir) {
 		List<String> out = Arrays
-				.asList(execProcess(BASH, C, loadPmShLib() + "pmGetManifestRequiredTools " + bundleDir.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
+				.asList(execShLibFunction(loadPmShLib(), "pmGetManifestRequiredTools", bundleDir.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
 		return sanitizeList(out);
 	}
 
 	@Override
 	public List<String> getManifestRequiredBundles(File bundleDir) {
 		List<String> out = Arrays
-				.asList(execProcess(BASH, C, loadPmShLib() + "pmGetManifestRequiredBundles " + bundleDir.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
+				.asList(execShLibFunction(loadPmShLib(), "pmGetManifestRequiredBundles", bundleDir.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
 		return sanitizeList(out);
 	}
 
 	@Override
 	public void checkTool(String tool) {
-		execProcess(BASH, C, loadPmShLib() + "pmCheckTool " + tool);
+		execShLibFunction(loadPmShLib(), "pmCheckTool", tool);
 	}
 
 }
