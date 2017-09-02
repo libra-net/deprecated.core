@@ -4,5 +4,6 @@ Bundle-Name: Shell library for interfaces processing
 Bundle-SymbolicName: libra.registry.interfaces.sh
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Libra
-Require-Tool: jq
+Bundle-ClassPath: lib/
+Require-Tool: jq,md5sum
 Eclipse-BundleShape: dir

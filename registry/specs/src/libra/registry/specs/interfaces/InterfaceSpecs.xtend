@@ -4,20 +4,23 @@ import org.junit.Test
 import org.junit.FixMethodOrder
 import org.junit.runners.MethodSorters
 
+/**
+ * Interfaces are definitions of how a service client triggers function calls and exchanges
+ * data with a service provider.
+ * 
+ * Interfaces are defined thanks to a JSON file, that is wholly describing and documenting it.
+ * 
+ * For a given interface, and for a given implementation language, glue code needs to be generated
+ * to let the service provider/client handling this interface.
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 abstract class InterfaceSpecs {
 	
 	/**
-	 * Interfaces are definitions of how a service client triggers function calls and exchanges
-	 * data with a service provider.
-	 * 
-	 * Interfaces are defined thanks to a JSON file, that is wholly describing and documenting it.
-	 * 
-	 * For a given interface, and for a given implementation language, glue code needs to be generated
-	 * to let the service provider/client handling this interface.
+	 * Interface files need to be valid JSON file. The interface lib shall provide a method to validate JSON file syntax.
 	 */
 	@Test
-	def abstract void s010_interface();
+	def abstract void s010_interfaceSyntax_validate();
 
 	/**
 	 * Interfaces are uniquely identified by a token that is generated from the interface JSON file content.
@@ -49,4 +52,17 @@ abstract class InterfaceSpecs {
 	@Test
 	def abstract void s024_interfaceToken_methodsUpdate();
 	
+	/**
+	 * Interfaces shall provide a "methods" array, that lists all the methods provided by this interface.
+	 * Each method is at least identified by a "name".
+	 * 
+	 * Example:
+	 "methods": [ {
+			"name":"printHello",
+		},{
+			"name":"printHello2",
+		} ]
+	 */
+	@Test
+	def abstract void s030_interfaceMethods();
 }
