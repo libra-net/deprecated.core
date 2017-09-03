@@ -11,10 +11,11 @@ class InterfaceTests4Java extends InterfaceSpecs {
 	
 	val SIMPLE = "simpleSample"
 	val INVALID = "invalid"
-	val EXPECTED_SIMPLE_TOKEN = "be44b00058d82421f3f4d36a4e4e026b"
+	val EXPECTED_SIMPLE_TOKEN = "678f534f2f8c90543cda0735c85fd2c4"
 	val METHOD_PRINT = "printHello"
-	val METHOD_PRINT2 = "printHello2"
+	val METHOD_DO_SOMETHING = "doSomething"
 	val TYPE_STRING = "string"
+	val TYPE_VOID = "void"
 	val im = InterfacesManager.INSTANCE
 	
 	def getTestFile(String name) {
@@ -37,6 +38,7 @@ class InterfaceTests4Java extends InterfaceSpecs {
 	override s011_interfaceSyntax_validateType() {
 		// Verify known types
 		im.validateType(getTestFile(SIMPLE), TYPE_STRING)
+		im.validateType(getTestFile(SIMPLE), TYPE_VOID)
 		
 		try {
 			// Verify unknown type
@@ -87,7 +89,7 @@ class InterfaceTests4Java extends InterfaceSpecs {
 	override s024_interfaceToken_methodsUpdate() {
 		// Rename method
 		var initialContent = FileUtils.readFileToString(getTestFile(SIMPLE))
-		var modifiedContent = initialContent.replaceAll("printHello2","sayHello")
+		var modifiedContent = initialContent.replaceAll(METHOD_PRINT,"sayHello")
 		Assert.assertNotEquals(initialContent, modifiedContent)
 		var updatedFile = File.createTempFile("methodRenamed", ".json");
 		FileUtils.writeStringToFile(updatedFile, modifiedContent)
@@ -102,7 +104,7 @@ class InterfaceTests4Java extends InterfaceSpecs {
 		var methods = im.methods(getTestFile(SIMPLE))
 		Assert.assertEquals(2, methods.size)
 		Assert.assertEquals(METHOD_PRINT, methods.get(0))
-		Assert.assertEquals(METHOD_PRINT2, methods.get(1))
+		Assert.assertEquals(METHOD_DO_SOMETHING, methods.get(1))
 	}
 	
 	override s031_interfaceMethods_returnType() {
@@ -134,4 +136,9 @@ class InterfaceTests4Java extends InterfaceSpecs {
 		}
 	}
 	
+	override s032_interfaceMethods_returnVoid() {
+		// Check return type
+		var type = im.methodGetType(getTestFile(SIMPLE), METHOD_DO_SOMETHING)
+		Assert.assertEquals(TYPE_VOID, type)
+	}
 }

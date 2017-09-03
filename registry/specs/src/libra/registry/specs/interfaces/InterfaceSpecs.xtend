@@ -26,6 +26,7 @@ abstract class InterfaceSpecs {
 	 * Interface files shall allow to manipulate basic built-in data types.
 	 * 
 	 * The allowed types are the following ones:
+	 * - void:		only for methods without return type
 	 * - string:	a character string
 	 * 
 	 * The interface lib shall provide a method to validate if a data type is known
@@ -78,7 +79,7 @@ abstract class InterfaceSpecs {
 	def abstract void s030_interfaceMethods();
 	
 	/**
-	 * Each method shall have a returned type, specified in a "ret" field.
+	 * A method should have a returned type, specified in a "ret" field.
 	 * The interface lib shall verify that used returned types are valid.
 	 * 
 	 * Example:
@@ -89,4 +90,15 @@ abstract class InterfaceSpecs {
 	 */
 	@Test
 	def abstract void s031_interfaceMethods_returnType();
+		
+	/**
+	 * A method should have no return type. This is equivalent to have a "void" type. In this case the "ret" field should not be present.
+	 * 
+	 * Example:
+	 "methods": [ {
+			"name":"doSomething"
+		} ]
+	 */
+	@Test
+	def abstract void s032_interfaceMethods_returnVoid();
 }

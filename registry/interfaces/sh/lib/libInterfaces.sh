@@ -26,7 +26,7 @@ function itfValidateType {
 	# Check type
 	local ret
 	case $2 in
-		string)
+		void|string)
 			ret=0 ;;
 		*)
 			ret=1
@@ -76,6 +76,7 @@ function itfMethodGetType {
 	local ret=$(cat $tmp | xargs)
 	rm -f $tmp
 	if [ "$ret" == "" ]; then echo "Unknown method: $2" >&2; return 1; fi
+	if [ "$ret" == "null" ]; then ret=void; fi
 	itfValidateType $1 $ret "Unknown return type for method $2: $ret"
 	echo $ret
 }

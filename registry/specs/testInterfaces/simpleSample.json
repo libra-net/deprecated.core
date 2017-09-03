@@ -6,8 +6,7 @@
 			"name":"printHello",
 			"ret":"string"
 		},{
-			"doc":"Another function to get an hello world string",
-			"name":"printHello2",
-			"ret":"string"
+			"doc":"Another function which doesn't return anything",
+			"name":"doSomething"
 	}]
 }
