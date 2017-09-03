@@ -14,6 +14,30 @@ function itfValidate {
 }
 
 ##
+## Validate if the required string is a known type for the input json file
+##
+## $1: json interface file
+## $2: type name
+## $3: (Optional) error message
+##
+function itfValidateType {
+	itfValidate $1
+	
+	# Check type
+	local ret
+	case $2 in
+		string)
+			ret=0 ;;
+		*)
+			ret=1
+			local msg="Unknown type: $2"
+			if [ "$3" != "" ]; then msg="$3"; fi
+			echo "$msg" >&2 ;;
+	esac
+	return $ret
+}
+
+##
 ## Reckon token from input json file
 ##
 ## $1: json interface file
@@ -37,4 +61,21 @@ function itfMethods {
 	jq -c ".methods[] | .name" $1 > $tmp
 	cat $tmp | xargs
 	rm -f $tmp
+}
+
+##
+## Get required method return type from input json file
+##
+## $1: json interface file
+## $2: method name
+##
+function itfMethodGetType {
+	itfValidate $1
+	local tmp=$(mktemp)
+	jq -c ".methods[] | select(.name == \"$2\") | .ret" $1 > $tmp
+	local ret=$(cat $tmp | xargs)
+	rm -f $tmp
+	if [ "$ret" == "" ]; then echo "Unknown method: $2" >&2; return 1; fi
+	itfValidateType $1 $ret "Unknown return type for method $2: $ret"
+	echo $ret
 }

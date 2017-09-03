@@ -26,6 +26,10 @@ public class InterfacesManager extends ShLibProcessWrapper {
 		execShLibFunction(loadItfShLib(), "itfValidate", itfFile.getAbsolutePath());
 	}
 
+	public void validateType(File itfFile, String typeName) {
+		execShLibFunction(loadItfShLib(), "itfValidateType", itfFile.getAbsolutePath(), typeName);
+	}
+
 	public String token(File itfFile) {
 		return execShLibFunction(loadItfShLib(), "itfToken", itfFile.getAbsolutePath());
 	}
@@ -34,5 +38,9 @@ public class InterfacesManager extends ShLibProcessWrapper {
 		List<String> out = Arrays.asList(execShLibFunction(loadItfShLib(), "itfMethods", itfFile.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
 		sanitizeList(out);
 		return out;
+	}
+
+	public String methodGetType(File itfFile, String name) {
+		return execShLibFunction(loadItfShLib(), "itfMethodGetType", itfFile.getAbsolutePath(), name);
 	}
 }

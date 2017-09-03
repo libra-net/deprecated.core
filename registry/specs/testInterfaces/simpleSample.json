@@ -4,10 +4,10 @@
 	"methods": [{
 			"doc":"Simple function to get an hello world string",
 			"name":"printHello",
-			"ret":"String"
+			"ret":"string"
 		},{
 			"doc":"Another function to get an hello world string",
 			"name":"printHello2",
-			"ret":"String"
+			"ret":"string"
 	}]
 }

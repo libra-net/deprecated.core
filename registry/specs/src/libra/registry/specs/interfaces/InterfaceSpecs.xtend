@@ -20,7 +20,18 @@ abstract class InterfaceSpecs {
 	 * Interface files need to be valid JSON file. The interface lib shall provide a method to validate JSON file syntax.
 	 */
 	@Test
-	def abstract void s010_interfaceSyntax_validate();
+	def abstract void s010_interfaceSyntax_validateJson();
+	
+	/**
+	 * Interface files shall allow to manipulate basic built-in data types.
+	 * 
+	 * The allowed types are the following ones:
+	 * - string:	a character string
+	 * 
+	 * The interface lib shall provide a method to validate if a data type is known
+	 */
+	@Test
+	def abstract void s011_interfaceSyntax_validateType();
 
 	/**
 	 * Interfaces are uniquely identified by a token that is generated from the interface JSON file content.
@@ -54,15 +65,28 @@ abstract class InterfaceSpecs {
 	
 	/**
 	 * Interfaces shall provide a "methods" array, that lists all the methods provided by this interface.
-	 * Each method is at least identified by a "name".
+	 * Each method is at least identified by a "name" field.
 	 * 
 	 * Example:
 	 "methods": [ {
-			"name":"printHello",
+			"name":"printHello"
 		},{
-			"name":"printHello2",
+			"name":"printHello2"
 		} ]
 	 */
 	@Test
 	def abstract void s030_interfaceMethods();
+	
+	/**
+	 * Each method shall have a returned type, specified in a "ret" field.
+	 * The interface lib shall verify that used returned types are valid.
+	 * 
+	 * Example:
+	 "methods": [ {
+			"name":"printHello",
+			"ret":"string"
+		} ]
+	 */
+	@Test
+	def abstract void s031_interfaceMethods_returnType();
 }
