@@ -26,6 +26,13 @@ abstract class CodeGenSpecs {
 	def abstract void s011_codeGen_mainInput();
 	
 	/**
+	 * When invoked, code generator needs to be told which kind of code it has to generate.
+	 * Not specifying the type is an error.
+	 */
+	@Test
+	def abstract void s012_codeGen_mainType();
+	
+	/**
 	 * Some languages need an Interface file to specify the service to be implemented/used.
 	 * The code generator shall be able to generate this interface file from an input interface JSON file.
 	 * 

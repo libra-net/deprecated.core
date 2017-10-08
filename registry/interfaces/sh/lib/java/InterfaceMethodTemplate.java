@@ -1,0 +1,5 @@
+	/**
+	 * {TOKEN.METHOD.DOC}
+	 */
+	{TOKEN.METHOD.TYPE} {TOKEN.METHOD.NAME}();
+

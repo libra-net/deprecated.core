@@ -51,6 +51,33 @@ function itfToken {
 }
 
 ##
+## Get main documentation from input json file
+##
+## $1: json interface file
+##
+function itfDoc {
+	itfValidate $1
+	local tmp=$(mktemp)
+	jq -c ".doc" $1 > $tmp
+	cat $tmp | sed -e 's|"\(.*\)"|\1|'
+	rm -f $tmp
+}
+
+##
+## Get name from input json file
+##
+## $1: json interface file
+##
+function itfName {
+	itfValidate $1
+	local tmp=$(mktemp)
+	basename --suffix=.json $1 > $tmp
+	name=$(cat $tmp)
+	echo ${name^}
+	rm -f $tmp
+}
+
+##
 ## Get method names from input json file
 ##
 ## $1: json interface file
@@ -79,4 +106,20 @@ function itfMethodGetType {
 	if [ "$ret" == "null" ]; then ret=void; fi
 	itfValidateType $1 $ret "Unknown return type for method $2: $ret"
 	echo $ret
+}
+
+##
+## Get required method doc from input json file
+##
+## $1: json interface file
+## $2: method name
+##
+function itfMethodGetDoc {
+	itfValidate $1
+	local tmp=$(mktemp)
+	jq -c ".methods[] | select(.name == \"$2\") | .doc" $1 > $tmp
+	local doc=$(cat $tmp | sed -e 's|"\(.*\)"|\1|')
+	rm -f $tmp
+	if [ "$doc" == "" ]; then echo "Unknown method: $2" >&2; return 1; fi
+	echo $doc
 }

@@ -35,6 +35,22 @@ abstract class InterfaceSpecs {
 	def abstract void s011_interfaceSyntax_validateType();
 
 	/**
+	 * Interface files shall provide a main documentation text
+	 * 
+	 * The interface lib shall provide a method to get this text
+	 */
+	@Test
+	def abstract void s015_interfaceMain_doc();
+
+	/**
+	 * A given interface name shall be deduced from the interface JSON file name.
+	 * 
+	 * The interface lib shall provide a method to get this name
+	 */
+	@Test
+	def abstract void s016_interfaceMain_name();
+
+	/**
 	 * Interfaces are uniquely identified by a token that is generated from the interface JSON file content.
 	 */
 	@Test
@@ -101,4 +117,16 @@ abstract class InterfaceSpecs {
 	 */
 	@Test
 	def abstract void s032_interfaceMethods_returnVoid();
+		
+	/**
+	 * A method shall have some documentation text, provided in the "doc" field.
+	 * 
+	 * Example:
+	 "methods": [ {
+			"name":"doSomething",
+			"doc":"Some documentation..."
+		} ]
+	 */
+	@Test
+	def abstract void s033_interfaceMethods_doc();
 }

@@ -42,6 +42,18 @@ class InterfaceTests4Java extends InterfaceSpecs {
 		}
 	}
 	
+	override s015_interfaceMain_doc() {
+		// Check doc
+		var doc = im.getDoc(GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE))
+		Assert.assertEquals("This is a sample interface", doc)
+	}
+	
+	override s016_interfaceMain_name() {
+		// Check name
+		var name = im.getName(GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE))
+		Assert.assertEquals("SimpleSample", name)
+	}
+	
 	override s020_interfaceToken() {
 		// Get token
 		var token = im.token(GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE))
@@ -134,4 +146,11 @@ class InterfaceTests4Java extends InterfaceSpecs {
 		var type = im.methodGetType(GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE), METHOD_DO_SOMETHING)
 		Assert.assertEquals(TYPE_VOID, type)
 	}
+	
+	override s033_interfaceMethods_doc() {
+		// Check doc
+		var doc = im.methodGetDoc(GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE), METHOD_DO_SOMETHING)
+		Assert.assertEquals("Another function which doesn't return anything", doc)
+	}
+	
 }
