@@ -71,6 +71,7 @@ function codegenBuild_itfMethods {
 	# Iterate on methods
 	local methodName
 	local tmp=$(mktemp)
+	local first=1
 	touch $tmp
 	for methodName in $(itfMethods $GENINPUT); do
 		# Build replacement expression (3 tokens)
@@ -89,6 +90,11 @@ function codegenBuild_itfMethods {
 		done
 		
 		# Perform substitutions on template
+		if test $first -eq 0; then
+			echo "" >> $tmp
+		else
+			first=0
+		fi
 		cat $TEMPLATE_INTERFACE_METHOD_FILE | sed -e "$GENREPLACE" >> $tmp
 	done
 	

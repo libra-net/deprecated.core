@@ -27,6 +27,9 @@ OPTIONS
 	-i|--input <INPUT>
 		Input interface JSON file for which to generate code
 	
+	-o|--output <OUTPUT>
+		Output folder where to generate file; if not specified, will generate to stdout
+	
 	-l|--language <LANGUAGE>
 		Target implementation language for which to generate code
 		Allowed values are: $(codegenListLanguages)
@@ -43,6 +46,7 @@ while test -n "$1"; do
 		-h|--help) __help; exit 0;;
 		-l|--language) shift; GENLANG="$1";;
 		-i|--input) shift; GENINPUT="$1";;
+		-o|--output) shift; GENOUTPUTROOTFOLDER="$1";;
 		-t|--type) shift; GENTYPE="$1";;
 		*)  ;;
 	esac
@@ -81,8 +85,16 @@ fi
 codegenCheckType $GENTYPE
 
 ## Ready for generation
-#GENOUTPUT="$(codegenBuild)"
-codegenBuild
+GENOUTPUT="$(codegenBuild)"
 
-## Default: display generated code
-#echo $GENOUTPUT
+if test -z "$GENOUTPUTROOTFOLDER"; then
+	## Default: display generated code
+	echo "$GENOUTPUT"
+else
+	## Prepare output directory structure
+	GENOUTPUTFOLDER=${GENOUTPUTROOTFOLDER}/$(codegenGetSubFolder)
+	mkdir -p $GENOUTPUTFOLDER
+	
+	## Write to output file
+	echo "$GENOUTPUT" > $GENOUTPUTFOLDER/$(codegenGetFileName)
+fi

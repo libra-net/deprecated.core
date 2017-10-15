@@ -27,3 +27,17 @@ function codegenSpecificGetType {
 			echo $type ;;
 	esac
 }
+
+##
+## Get sub folder (= Java package) for code generation
+##
+function codegenGetSubFolder {
+	echo "libra/itf"
+}
+
+##
+## Get file name for code generation
+##
+function codegenGetFileName {
+	echo "$(itfName $GENINPUT).java"
+}

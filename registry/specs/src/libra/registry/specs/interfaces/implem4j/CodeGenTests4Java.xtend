@@ -1,6 +1,9 @@
 package libra.registry.specs.interfaces.implem4j
 
 import libra.registry.specs.interfaces.CodeGenSpecs
+import org.junit.Assert
+import java.io.File
+import org.apache.commons.io.FileUtils
 
 class CodeGenTests4Java extends CodeGenSpecs {
 
@@ -30,9 +33,19 @@ class CodeGenTests4Java extends CodeGenSpecs {
 	}
 	
 	override s020_codeGen_interface() {
-		// Generate Interface code
-		gc.exec(0, "-l", "java", "-i", testInput, "-t", "itf")
-		// TODO Verify generated output
+		// Initial clean
+		val expectedPath = "/tmp/libra/itf/SimpleSample.java"
+		new File(expectedPath).delete
+		Assert.assertFalse(new File(expectedPath).isFile)
+
+		gc.exec(0, "-l", "java", "-i", testInput, "-t", "itf")					// Generate Interface code to stdout
+		gc.exec(0, "-l", "java", "-i", testInput, "-t", "itf", "-o", "/tmp" )	// Generate Interface code to temporary directory
+		
+		// Verify generated output
+		Assert.assertTrue(new File(expectedPath).isFile)
+		val generatedFile = FileUtils.readFileToString(new File(expectedPath))
+		val expectedFile = FileUtils.readFileToString(GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE_JAVA))
+		Assert.assertEquals(expectedFile, generatedFile)
 	}
 	
 }
