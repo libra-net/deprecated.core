@@ -1,19 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>libra</groupId>
-	<artifactId>registry</artifactId>
+	<artifactId>resolver</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<parent>
 		<groupId>libra</groupId>
-		<artifactId>core</artifactId>
+		<artifactId>registry</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<packaging>pom</packaging>
 	<modules>
-		<module>client</module>
-		<module>interfaces</module>
-		<module>provider</module>
-		<module>resolver</module>
-		<module>specs</module>
+		<module>direct</module>
 	</modules>
 </project>
