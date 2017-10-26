@@ -7,9 +7,10 @@ import org.apache.commons.io.FileUtils
 
 class CodeGenTests4Java extends CodeGenSpecs {
 
-	val gc = GenCodeManager.INSTANCE
-	val testInput = GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE).absolutePath
-	val testInvalid = GenCodeInputs.getTestFile(GenCodeInputs.INVALID).absolutePath
+	static val gc = GenCodeManager.INSTANCE
+	static val testInput = GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE).absolutePath
+	static val testInvalid = GenCodeInputs.getTestFile(GenCodeInputs.INVALID).absolutePath
+	static val expectedPath = "/tmp/libra/itf/SimpleSample.java"
 	
 	override s010_codeGen_mainLanguage() {
 		gc.exec(1, "-i", testInput)										// Try without language
@@ -33,11 +34,7 @@ class CodeGenTests4Java extends CodeGenSpecs {
 	}
 	
 	override s020_codeGen_interface() {
-		// Initial clean
-		val expectedPath = "/tmp/libra/itf/SimpleSample.java"
-		new File(expectedPath).delete
-		Assert.assertFalse(new File(expectedPath).isFile)
-
+		cleanOutput
 		gc.exec(0, "-l", "java", "-i", testInput, "-t", "itf")					// Generate Interface code to stdout
 		gc.exec(0, "-l", "java", "-i", testInput, "-t", "itf", "-o", "/tmp" )	// Generate Interface code to temporary directory
 		
@@ -48,4 +45,20 @@ class CodeGenTests4Java extends CodeGenSpecs {
 		Assert.assertEquals(expectedFile, generatedFile)
 	}
 	
+	override s021_codeGen_interfaceToken() {
+		cleanOutput
+		gc.exec(0, "-l", "java", "-i", testInput, "-t", "itf", "-o", "/tmp" )	// Generate Interface code to temporary directory
+
+		// Verify generated output
+		Assert.assertTrue(new File(expectedPath).isFile)
+		val generatedFile = FileUtils.readFileToString(new File(expectedPath))
+		Assert.assertTrue(generatedFile.contains("_TOKEN"))
+		Assert.assertTrue(generatedFile.contains(InterfaceTests4Java.EXPECTED_SIMPLE_TOKEN))
+	}
+	
+	def cleanOutput() {
+		// Initial clean
+		new File(expectedPath).delete
+		Assert.assertFalse(new File(expectedPath).isFile)
+	}
 }

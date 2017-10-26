@@ -5,5 +5,7 @@ package {TOKEN.PACKAGE};
  */
 public interface {TOKEN.ITF.NAME} {
 	
+	String _TOKEN = "{TOKEN.TOKEN}";
+	
 {TOKEN.METHODS}
 }

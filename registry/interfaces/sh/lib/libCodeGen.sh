@@ -49,11 +49,12 @@ function codegenBuild_itf {
 		"{TOKEN.PACKAGE}|libra.itf"
 		"{TOKEN.MAIN.DOC}|$(itfDoc $GENINPUT)"
 		"{TOKEN.ITF.NAME}|$(itfName $GENINPUT)"
+		"{TOKEN.TOKEN}|$(itfToken $GENINPUT)"
 		"{TOKEN.METHODS}|$(codegenBuild_itfMethods)"
 	)
 	local GENREPLACE=""
 	local index
-	for index in $(seq 0 3); do
+	for index in $(seq 0 4); do
 		local tokenExpr=${ITFGENREPLACE[$index]}
 		local tokenName="${tokenExpr%%|*}"
 		local tokenRepl="${tokenExpr##*|}"

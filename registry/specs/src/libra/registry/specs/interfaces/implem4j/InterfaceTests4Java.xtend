@@ -8,12 +8,12 @@ import org.junit.Assume
 
 class InterfaceTests4Java extends InterfaceSpecs {
 	
-	val EXPECTED_SIMPLE_TOKEN = "678f534f2f8c90543cda0735c85fd2c4"
-	val METHOD_PRINT = "printHello"
-	val METHOD_DO_SOMETHING = "doSomething"
-	val TYPE_STRING = "string"
-	val TYPE_VOID = "void"
-	val im = InterfacesManager.INSTANCE
+	public static val EXPECTED_SIMPLE_TOKEN = "678f534f2f8c90543cda0735c85fd2c4"
+	static val METHOD_PRINT = "printHello"
+	static val METHOD_DO_SOMETHING = "doSomething"
+	static val TYPE_STRING = "string"
+	static val TYPE_VOID = "void"
+	static val im = InterfacesManager.INSTANCE
 	
 	override s010_interfaceSyntax_validateJson() {
 		// Verify simple sample

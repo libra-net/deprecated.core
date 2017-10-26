@@ -41,4 +41,14 @@ abstract class CodeGenSpecs {
 	 */
 	@Test
 	def abstract void s020_codeGen_interface();
+	
+	/**
+	 * Generated interface shall include a constant string field, containing the interface token.
+	 * (cf InterfaceSpec.s020_interfaceToken for more information on interface tokens)
+	 * 
+	 * Applicable to:
+	 * - Java
+	 */
+	@Test
+	def abstract void s021_codeGen_interfaceToken();
 }
