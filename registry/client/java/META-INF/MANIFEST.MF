@@ -6,3 +6,5 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Libra
 Require-Bundle: libra.misc.pluginManager.java
+Export-Package: libra.registry.client,
+ libra.registry.client.resolver;x-friends:="libra.registry.resolver.direct.java"

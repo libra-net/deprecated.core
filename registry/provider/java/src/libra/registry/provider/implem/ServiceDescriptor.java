@@ -1,19 +1,14 @@
 package libra.registry.provider.implem;
 
-import libra.registry.provider.IService;
-import libra.registry.provider.ServiceImplem;
-
 public class ServiceDescriptor {
 
 	private String id;
 	private String interfaceToken;
-	private IService entryPoint;
-	private ServiceImplem implem;
+	private Object implem;
 
-	public ServiceDescriptor(String id, String interfaceToken, IService entryPoint, ServiceImplem implem) {
+	public ServiceDescriptor(String id, String interfaceToken, Object implem) {
 		this.id = id;
 		this.interfaceToken = interfaceToken;
-		this.entryPoint = entryPoint;
 		this.implem = implem;
 	}
 
@@ -25,11 +20,7 @@ public class ServiceDescriptor {
 		return interfaceToken;
 	}
 
-	public IService getEntryPoint() {
-		return entryPoint;
-	}
-
-	public ServiceImplem getImplem() {
-		return implem;
+	public <ITF> ITF getImplem(Class<ITF> interfaceClass) {
+		return interfaceClass.cast(implem);
 	}
 }

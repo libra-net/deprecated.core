@@ -10,8 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 import libra.misc.pluginManager.XPReader;
 import libra.misc.pluginManager.XPReader.XPContrib;
 import libra.registry.provider.IRegistryProvider;
-import libra.registry.provider.IService;
-import libra.registry.provider.ServiceImplem;
 
 public class RegistryProvider implements IRegistryProvider {
 
@@ -30,49 +28,59 @@ public class RegistryProvider implements IRegistryProvider {
 			// Extract contrib attributes and register service
 			// @formatter:off
 			registerService(
+				Class.forName(XPR.getStringAttribute(c, "interface").get()),
 				XPR.getStringAttribute(c, "id").get(),
-				XPR.getStringAttribute(c, "interface").get(),
-				instantiate(XPR.getStringAttribute(c, "entryPoint").get()),
-				ServiceImplem.valueOf(XPR.getStringAttribute(c, "implem").get().toUpperCase()));
+				instantiate(XPR.getStringAttribute(c, "entryPoint").get()));
 			// @formatter:on
-		} catch (RuntimeException e) {
-			// Something went wrong, log it here
+		} catch (Exception e) {
+			// TODO Something went wrong, log it here
 			e.printStackTrace();
 		}
 	}
 
-	private IService instantiate(final String className) {
+	private Object instantiate(final String className) {
 		try {
-			return IService.class.cast(Class.forName(className).newInstance());
+			return Class.forName(className).newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			throw new IllegalStateException(e);
 		}
 	}
 
 	@Override
-	public synchronized void registerService(String ID, String interfaceToken, IService entryPoint, ServiceImplem implem) {
+	public synchronized <ITF> void registerService(Class<ITF> interfaceClass, String ID, Object implem) {
 		// Verify inputs
 		if (!verifyID(ID)) {
 			throw new UnsupportedOperationException("Malformed service ID: " + ID);
 		}
+		String interfaceToken = getToken(interfaceClass);
 		if (!verifyToken(interfaceToken)) {
 			throw new UnsupportedOperationException("Malformed interface token: " + interfaceToken);
 		}
-		if (entryPoint == null) {
+		if (implem == null) {
 			throw new UnsupportedOperationException("Entry point can't be null");
 		}
 
 		// Reckon identifier, and check for local singleton
-		if (getService(ID, interfaceToken).isPresent()) {
+		if (getService(interfaceClass, ID).isPresent()) {
 			throw new UnsupportedOperationException("Service already registered: " + ID + "/" + interfaceToken);
 		}
 
 		// Register
-		registeredServices.add(new ServiceDescriptor(ID, interfaceToken, entryPoint, implem));
+		registeredServices.add(new ServiceDescriptor(ID, interfaceToken, implem));
 	}
 
-	private Optional<ServiceDescriptor> getService(String iD, String interfaceToken) {
-		return registeredServices.stream().filter(s -> s.getId().equals(iD) && s.getInterfaceToken().equals(interfaceToken)).findFirst();
+	private String getToken(Class<?> interfaceClass) {
+		try {
+			return (String) interfaceClass.getDeclaredField("_TOKEN").get(null);
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Token not found in " + interfaceClass.getName(), e);
+		}
+	}
+
+	@Override
+	public <ITF> Optional<ITF> getService(Class<ITF> interfaceClass, String ID) {
+		return registeredServices.stream().filter(s -> s.getId().equals(ID) && s.getInterfaceToken().equals(getToken(interfaceClass))).findFirst()
+				.map(s -> s.getImplem(interfaceClass));
 	}
 
 	private boolean verifyToken(String interfaceToken) {

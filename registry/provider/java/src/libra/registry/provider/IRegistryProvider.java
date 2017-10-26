@@ -1,5 +1,7 @@
 package libra.registry.provider;
 
+import java.util.Optional;
+
 import libra.registry.provider.implem.RegistryProvider;
 
 /**
@@ -18,14 +20,23 @@ public interface IRegistryProvider {
 	/**
 	 * Service registration method
 	 * 
+	 * @param interface
+	 *            Interface class
 	 * @param ID
 	 *            Service ID: an alphanumeric string, which must respect the following regular expression: [a-zA-Z][a-zA-Z0-9_\-]*
-	 * @param interfaceToken
-	 *            Interface token, got from the generated interface code
-	 * @param entryPoint
-	 *            Entry point interface, to be called when a new service instance is requested
 	 * @param implem
-	 *            Implementation language
+	 *            Service implementation instance
 	 */
-	void registerService(String ID, String interfaceToken, IService entryPoint, ServiceImplem implem);
+	<ITF> void registerService(Class<ITF> interfaceClass, String ID, Object implem);
+
+	/**
+	 * Service access method
+	 * 
+	 * @param interface
+	 *            Interface class
+	 * @param ID
+	 *            Service ID: an alphanumeric string, which must respect the following regular expression: [a-zA-Z][a-zA-Z0-9_\-]*
+	 * @return The service instance
+	 */
+	<ITF> Optional<ITF> getService(Class<ITF> interfaceClass, String ID);
 }

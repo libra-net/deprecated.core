@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="libra.registry.provider" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="libra.registry.provider.common" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="libra.registry.provider" id="xp" name="Service Registry Extension Point"/>
+         <meta.schema plugin="libra.registry.provider.common" id="xp" name="Service Registry Extension Point"/>
       </appinfo>
       <documentation>
          Extension point for service providers.
@@ -66,9 +66,6 @@
                <documentation>
                   Interface to be presented for this registered service.
                </documentation>
-               <appinfo>
-                  <meta.attribute kind="resource"/>
-               </appinfo>
             </annotation>
          </attribute>
          <attribute name="entryPoint" type="string" use="required">
@@ -77,21 +74,6 @@
                   Entry point to use for this service implementation.
                </documentation>
             </annotation>
-         </attribute>
-         <attribute name="implem" use="required">
-            <annotation>
-               <documentation>
-                  Implementation language for this service.
-               </documentation>
-            </annotation>
-            <simpleType>
-               <restriction base="string">
-                  <enumeration value="java">
-                  </enumeration>
-                  <enumeration value="sh">
-                  </enumeration>
-               </restriction>
-            </simpleType>
          </attribute>
       </complexType>
    </element>
