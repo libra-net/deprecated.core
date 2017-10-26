@@ -1,6 +1,7 @@
 ## Devel
 /*/*/bin/
 /*/*/xtend-gen/
+/*/*/src-gen/
 /*/*/target/
 
 /*/*/*/bin/
