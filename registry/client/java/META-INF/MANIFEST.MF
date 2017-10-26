@@ -5,3 +5,4 @@ Bundle-SymbolicName: libra.registry.client.java
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Libra
+Require-Bundle: libra.misc.pluginManager.java
