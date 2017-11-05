@@ -56,4 +56,14 @@ public interface XPReader {
 	 */
 	Optional<String> getStringAttribute(XPContrib contrib, String name);
 
+	/**
+	 * Gets the required Class attribute from the required contribution
+	 * 
+	 * @param contrib
+	 *            Contribution instance
+	 * @param name
+	 *            Name of the attribute from which to get a Class instance
+	 * @return Found parameter value
+	 */
+	Optional<Class<?>> getClassAttribute(XPContrib contrib, String name);
 }

@@ -30,17 +30,13 @@ public class RegistryProvider implements IRegistryProvider {
 	private void manageContrib(XPContrib c) {
 		try {
 			// Extract contrib attributes and register service
-			String className = XPR.getStringAttribute(c, "interface").get();
-			// FIXME We need a classloader here
-			// ClassLoader cl = loaders.get(className);
-			// Class<?> requiredClass = Class.forName(className, true, cl);
-			Class<?> requiredClass = Class.forName(className);
+			Class<?> requiredClass = XPR.getClassAttribute(c, "interface").get();
 
 			// @formatter:off
 			registerServiceGeneric(
 				requiredClass,
 				XPR.getStringAttribute(c, "id").get(),
-				requiredClass.cast(instantiate(XPR.getStringAttribute(c, "entryPoint").get())));
+				requiredClass.cast(instantiate(XPR.getClassAttribute(c, "entryPoint").get())));
 			// @formatter:on
 		} catch (Exception e) {
 			// TODO Something went wrong, log it here
@@ -70,10 +66,10 @@ public class RegistryProvider implements IRegistryProvider {
 		registeredServices.add(new ServiceDescriptor(ID, interfaceToken, implem));
 	}
 
-	private Object instantiate(final String className) {
+	private Object instantiate(final Class<?> clazz) {
 		try {
-			return Class.forName(className).newInstance();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			return clazz.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
 			throw new IllegalStateException(e);
 		}
 	}

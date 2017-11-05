@@ -18,6 +18,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import libra.misc.classloader.osgi.java.OsgiClassLoader;
 import libra.misc.pluginManager.PluginManager;
 import libra.misc.pluginManager.XPReader;
 
@@ -86,4 +87,15 @@ public class XPReaderImplem implements XPReader {
 		return getAttribute(root.getContribNode(), name);
 	}
 
+	@Override
+	public Optional<Class<?>> getClassAttribute(XPContrib contrib, String name) {
+		return getStringAttribute(contrib, name).map(n -> getClass(contrib, n));
+	}
+
+	private Class<?> getClass(XPContrib contrib, String name) {
+		XPContribElement root = (XPContribElement) contrib;
+		String bundleName = PluginManager.INSTANCE.getManifestSymbolicName(root.getpXml().getParentFile());
+		// TODO Should be a cleaner (more generic way) to choose/contribute the classloader
+		return new OsgiClassLoader().loadClass(bundleName, name);
+	}
 }

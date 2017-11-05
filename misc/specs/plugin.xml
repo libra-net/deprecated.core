@@ -5,7 +5,7 @@
    <extension
          point="libra.misc.specs.foo">
       <testElement attr1="testValue1"/>
-      <testElement attr1="testValue2"/>
+      <testElement attr1="testValue2" class="libra.misc.specs.pluginManager.implem4j.ClassForContrib"/>
    </extension>
 
 </plugin>

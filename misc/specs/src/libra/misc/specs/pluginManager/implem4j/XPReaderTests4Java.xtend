@@ -10,6 +10,7 @@ class XPReaderTests4Java extends XPReaderSpecs {
 	static val XPID = "libra.misc.specs.foo"
 	static val ELID = "testElement"
 	static val ATID = "attr1"
+	static val CLID = "class"
 	
 	override spec_getContributions() {
 		// Verify contribs to test extension point
@@ -49,6 +50,21 @@ class XPReaderTests4Java extends XPReaderSpecs {
 		// Check unknown attribute
 		attr = xr.getStringAttribute(elements.get(0), "unknownAttr")
 		Assert.assertFalse(attr.present)
+	}
+	
+	override spec_getClassAttribute() {
+		// Get elements
+		var elements = xr.getElements(xr.getContributions(XPID).get(0), ELID)
+		for (element : elements) {
+			if (xr.getStringAttribute(element, CLID).present) {
+				var clOpt = xr.getClassAttribute(element, CLID)
+				Assert.assertTrue(clOpt.present)
+				var obj = clOpt.get.newInstance
+				Assert.assertTrue(obj instanceof ClassForContrib)
+			} else {
+				Assert.assertFalse(xr.getClassAttribute(element, CLID).present)
+			}
+		}
 	}
 	
 }

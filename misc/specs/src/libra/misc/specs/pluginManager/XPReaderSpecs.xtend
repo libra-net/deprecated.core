@@ -30,8 +30,16 @@ abstract class XPReaderSpecs {
 	/**
 	 * XP Reader lib shall provide a method to get value from an attribute with a given name from a given contribution element.
 	 * 
-	 * If there are no attribute with this name, the returned value shall be empty.
+	 * If there are no attribute with this name, the returned optional value shall be empty.
 	 */
 	@Test
 	def abstract void spec_getStringAttribute();
+	
+	/**
+	 * XP Reader lib shall provide a method to get a Class instance from an attribute with a given name from a given contribution element.
+	 * 
+	 * If there are no attribute with this name, the returned optional value shall be empty.
+	 */
+	@Test
+	def abstract void spec_getClassAttribute();
 }

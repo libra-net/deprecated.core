@@ -11,7 +11,7 @@ class SanityTests4Java extends SanitySpecs {
 
 	override spec_AllBundles() {
 		var b = pm.getAllBundleDirs(pm.rootDir)
-		Assert.assertEquals(11, b.size)
+		Assert.assertEquals(12, b.size)
 	}
 
 	override spec_BundleProjectConsistency() {
@@ -71,7 +71,7 @@ class SanityTests4Java extends SanitySpecs {
 		var b = pm.getAllBundleDirs(pm.rootDir)
 		for (dir : b) {
 			val bID = pm.getManifestSymbolicName(dir)
-			if (!bID.endsWith(".specs")) {
+			if (!bID.endsWith(".specs") && !bID.contains(".osgi.")) {
 				var bundles = pm.getManifestRequiredBundles(dir)
 				var reqs = newArrayList("org.eclipse", "org.junit")
 				for (req : reqs) {
