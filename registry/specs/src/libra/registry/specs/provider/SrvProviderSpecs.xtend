@@ -12,10 +12,8 @@ abstract class SrvProviderSpecs {
 	 * 
 	 * Input parameters for a service registration are:
 	 * - the service ID
-	 * - the service interface token
-	 * - an entry point
-	 * - the implementation language ID
-	 * - some options
+	 * - the service interface
+	 * - an implementation
 	 */
 	@Test
 	def abstract void s010_registration();
@@ -28,22 +26,32 @@ abstract class SrvProviderSpecs {
 	def abstract void s011_registration_ID();
 
 	/**
-	 * The interface token is a string reckoned from the corresponding JSON description file.
+	 * The interface class is the interface which has to be implemented by this service.
+	 * The interface provides a token, which is a string reckoned from the corresponding JSON description file.
 	 * For more details, cf {@link libra.registry.specs.interfaces.InterfaceSpecs#s020_interfaceToken()}
 	 */
 	@Test
 	def abstract void s012_registration_interface();
 
 	/**
-	 * The entry point is a function to be called when a new service instance needs to be created.
-	 * This entry point must respect the required interface, and can't be null.
+	 * The implementation is an instance that will be used to resolve method calls.
+	 * This implementation must respect the required interface, and can't be null.
 	 */
 	@Test
 	def abstract void s013_registration_entry();
 
 	/**
-	 * The registration options are boolean flags that can be enabled or disabled.
+	 * For a given ID + interface pair, only one service can be registered.
+	 * Additional registrations will cause an exception.
 	 */
 	@Test
-	def abstract void s014_registration_options();
+	def abstract void s014_registration_once();
+
+	/**
+	 * In addition to dynamic registration method, it is possible as well to register a service by contributing to 
+	 * the service registry extension point.
+	 * Except the registration method, dynamic and contributed services are managed the same way.
+	 */
+	@Test
+	def abstract void s015_registration_contrib();
 }

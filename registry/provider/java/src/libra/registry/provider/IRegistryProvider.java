@@ -27,7 +27,7 @@ public interface IRegistryProvider {
 	 * @param implem
 	 *            Service implementation instance
 	 */
-	<ITF> void registerService(Class<ITF> interfaceClass, String ID, Object implem);
+	<ITF> void registerService(Class<ITF> interfaceClass, String ID, ITF implem);
 
 	/**
 	 * Service access method

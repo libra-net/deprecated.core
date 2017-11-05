@@ -19,6 +19,10 @@ public class RegistryProvider implements IRegistryProvider {
 	private List<ServiceDescriptor> registeredServices = new ArrayList<>();
 
 	public RegistryProvider() {
+		manageContribs();
+	}
+
+	private void manageContribs() {
 		// Register extension point contributions
 		XPR.getContributions("libra.registry.provider.common.xp").stream().flatMap(c -> XPR.getElements(c, "service").stream()).forEach(c -> manageContrib(c));
 	}
@@ -26,16 +30,44 @@ public class RegistryProvider implements IRegistryProvider {
 	private void manageContrib(XPContrib c) {
 		try {
 			// Extract contrib attributes and register service
+			String className = XPR.getStringAttribute(c, "interface").get();
+			// FIXME We need a classloader here
+			// ClassLoader cl = loaders.get(className);
+			// Class<?> requiredClass = Class.forName(className, true, cl);
+			Class<?> requiredClass = Class.forName(className);
+
 			// @formatter:off
-			registerService(
-				Class.forName(XPR.getStringAttribute(c, "interface").get()),
+			registerServiceGeneric(
+				requiredClass,
 				XPR.getStringAttribute(c, "id").get(),
-				instantiate(XPR.getStringAttribute(c, "entryPoint").get()));
+				requiredClass.cast(instantiate(XPR.getStringAttribute(c, "entryPoint").get())));
 			// @formatter:on
 		} catch (Exception e) {
 			// TODO Something went wrong, log it here
 			e.printStackTrace();
 		}
+	}
+
+	private void registerServiceGeneric(Class<?> interfaceClass, String ID, Object implem) {
+		// Verify inputs
+		if (!verifyID(ID)) {
+			throw new IllegalArgumentException("Malformed service ID: " + ID);
+		}
+		String interfaceToken = getToken(interfaceClass);
+		if (!verifyToken(interfaceToken)) {
+			throw new IllegalArgumentException("Malformed interface token: " + interfaceToken);
+		}
+		if (implem == null) {
+			throw new IllegalArgumentException("Entry point can't be null");
+		}
+
+		// Reckon identifier, and check for local singleton
+		if (getService(interfaceClass, ID).isPresent()) {
+			throw new IllegalStateException("Service already registered: " + ID + "/" + interfaceToken);
+		}
+
+		// Register
+		registeredServices.add(new ServiceDescriptor(ID, interfaceToken, implem));
 	}
 
 	private Object instantiate(final String className) {
@@ -47,26 +79,8 @@ public class RegistryProvider implements IRegistryProvider {
 	}
 
 	@Override
-	public synchronized <ITF> void registerService(Class<ITF> interfaceClass, String ID, Object implem) {
-		// Verify inputs
-		if (!verifyID(ID)) {
-			throw new UnsupportedOperationException("Malformed service ID: " + ID);
-		}
-		String interfaceToken = getToken(interfaceClass);
-		if (!verifyToken(interfaceToken)) {
-			throw new UnsupportedOperationException("Malformed interface token: " + interfaceToken);
-		}
-		if (implem == null) {
-			throw new UnsupportedOperationException("Entry point can't be null");
-		}
-
-		// Reckon identifier, and check for local singleton
-		if (getService(interfaceClass, ID).isPresent()) {
-			throw new UnsupportedOperationException("Service already registered: " + ID + "/" + interfaceToken);
-		}
-
-		// Register
-		registeredServices.add(new ServiceDescriptor(ID, interfaceToken, implem));
+	public synchronized <ITF> void registerService(Class<ITF> interfaceClass, String ID, ITF implem) {
+		registerServiceGeneric(interfaceClass, ID, implem);
 	}
 
 	private String getToken(Class<?> interfaceClass) {

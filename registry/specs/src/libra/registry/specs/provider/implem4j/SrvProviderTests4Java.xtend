@@ -1,28 +1,80 @@
 package libra.registry.specs.provider.implem4j
 
+import libra.itf.SimpleSample
+import libra.registry.provider.IRegistryProvider
 import libra.registry.specs.provider.SrvProviderSpecs
-import org.junit.Assume
+import org.junit.Assert
 
 class SrvProviderTests4Java extends SrvProviderSpecs {
 	
+	static val rp = IRegistryProvider.INSTANCE
+	static val mainSrvID = "mainSimpleService"
+	static val otherSrvID = "otherSimpleService"
+	static val contribSrvID = "contribSimpleSample"
+	static val expectedHello = "Hello World"
+	
 	override s010_registration() {
-		Assume.assumeTrue("TODO: auto-generated method stub", false)
+		// Ready to register
+		rp.registerService(typeof(SimpleSample), mainSrvID, new SimpleService)
+		
+		// Check registration is OK
+		var srvOpt = rp.getService(typeof(SimpleSample), mainSrvID)
+		Assert.assertTrue(srvOpt.present)
+		Assert.assertEquals(expectedHello,srvOpt.get.printHello)
+		srvOpt.get.doSomething
 	}
 	
 	override s011_registration_ID() {
-		Assume.assumeTrue("TODO: auto-generated method stub", false)
+		// Correct generation has been done above
+		// Give a try with an invalid service identifier
+		try {
+			rp.registerService(typeof(SimpleSample), "a.b.c#", new SimpleService)
+			Assert.fail("An exception was expected")
+		} catch (IllegalArgumentException e) {
+			// OK!
+		}
 	}
 	
 	override s012_registration_interface() {
-		Assume.assumeTrue("TODO: auto-generated method stub", false)
+		// Correct generation has been done above
+		// Give a try with an invalid token
+		try {
+			rp.registerService(typeof(DummyInterface), mainSrvID, new DummyInterface{})
+			Assert.fail("An exception was expected")
+		} catch (IllegalArgumentException e) {
+			// OK!
+		}
 	}
 	
 	override s013_registration_entry() {
-		Assume.assumeTrue("TODO: auto-generated method stub", false)
+		// Correct generation has been done above
+		// Give a try with an invalid implementation
+		try {
+			rp.registerService(typeof(SimpleSample), mainSrvID, null)
+			Assert.fail("An exception was expected")
+		} catch (IllegalArgumentException e) {
+			// OK!
+		}
 	}
 	
-	override s014_registration_options() {
-		Assume.assumeTrue("TODO: auto-generated method stub", false)
+	override s014_registration_once() {
+		// Register one time
+		rp.registerService(typeof(SimpleSample), otherSrvID, new SimpleService)
+		
+		// Register a second time
+		try {
+			rp.registerService(typeof(SimpleSample), otherSrvID, new SimpleService)
+			Assert.fail("An exception was expected")
+		} catch (IllegalStateException e) {
+			// OK!
+		}
 	}
 	
+	override s015_registration_contrib() {
+		// Check registration is OK
+		var srvOpt = rp.getService(typeof(SimpleSample), contribSrvID)
+		Assert.assertTrue(srvOpt.present)
+		Assert.assertEquals(expectedHello,srvOpt.get.printHello)
+		srvOpt.get.doSomething
+	}
 }
