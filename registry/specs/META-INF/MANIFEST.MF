@@ -13,5 +13,6 @@ Require-Bundle: com.google.guava,
  libra.misc.extProc.java;bundle-version="1.0.0",
  libra.misc.pluginManager.java;bundle-version="1.0.0",
  org.apache.commons.io;bundle-version="2.2.0",
- libra.registry.provider.java;bundle-version="1.0.0"
+ libra.registry.provider.java;bundle-version="1.0.0",
+ libra.registry.client.java;bundle-version="1.0.0"
 

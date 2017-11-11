@@ -8,15 +8,17 @@ import org.junit.Assert
 class SrvProviderTests4Java extends SrvProviderSpecs {
 	
 	static val rp = IRegistryProvider.INSTANCE
-	static val mainSrvID = "mainSimpleService"
-	static val otherSrvID = "otherSimpleService"
-	static val contribSrvID = "contribSimpleSample"
+	public static val mainSrvID = "mainSimpleService"
+	public static val otherSrvID = "otherSimpleService"
+	public static val contribSrvID = "contribSimpleSample"
 	static val expectedHello = "Hello World"
 	
 	override s010_registration() {
-		// Ready to register
-		rp.registerService(typeof(SimpleSample), mainSrvID, new SimpleService)
-		
+		// Register if needed
+		if (!rp.getService(typeof(SimpleSample), mainSrvID).isPresent) {
+			rp.registerService(typeof(SimpleSample), mainSrvID, new SimpleService)
+		}
+
 		// Check registration is OK
 		var srvOpt = rp.getService(typeof(SimpleSample), mainSrvID)
 		Assert.assertTrue(srvOpt.present)

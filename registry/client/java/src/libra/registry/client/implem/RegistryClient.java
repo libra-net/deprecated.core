@@ -69,24 +69,15 @@ public class RegistryClient implements IRegistryClient {
 
 	private IRegistryResolver getResolver(XPContrib c) {
 		// Get class name
-		Optional<String> className = xpr.getStringAttribute(c, "implem");
-		if (!className.isPresent()) {
-			// TODO: log contribution ignored
-			return null;
-		}
-
-		// Get class
-		Class<?> clazz = null;
-		try {
-			clazz = Class.forName(className.get());
-		} catch (ClassNotFoundException e) {
+		Optional<Class<?>> classCandidate = xpr.getClassAttribute(c, "implem");
+		if (!classCandidate.isPresent()) {
 			// TODO: log contribution ignored
 			return null;
 		}
 
 		// Create instance
 		try {
-			return (IRegistryResolver) clazz.getConstructor().newInstance();
+			return (IRegistryResolver) classCandidate.get().newInstance();
 		} catch (Exception e) {
 			// TODO: log contribution ignored
 			return null;
