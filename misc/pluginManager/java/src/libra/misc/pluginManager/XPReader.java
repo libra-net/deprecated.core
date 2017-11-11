@@ -29,7 +29,7 @@ public interface XPReader {
 	 * Gets the list of contributors for the required extension point ID
 	 * 
 	 * @param xpID
-	 *            Extention point ID from which to get the contributions
+	 *            Extension point ID from which to get the contributions
 	 * @return List of contributions, to be used by other methods of this interface
 	 */
 	List<XPContrib> getContributions(String xpID);
