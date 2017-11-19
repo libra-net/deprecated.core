@@ -14,4 +14,10 @@ public class SimpleService implements SimpleSample {
 		// Nothing to do
 	}
 
+	@Override
+	public String printSingleArg() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -8,9 +8,10 @@ import org.junit.Assume
 
 class InterfaceTests4Java extends InterfaceSpecs {
 	
-	public static val EXPECTED_SIMPLE_TOKEN = "678f534f2f8c90543cda0735c85fd2c4"
+	public static val EXPECTED_SIMPLE_TOKEN = "11eeb3b6a66a804be976eb39cc40a03c"
 	static val METHOD_PRINT = "printHello"
 	static val METHOD_DO_SOMETHING = "doSomething"
+	static val METHOD_PRINT_SINGLE_ARG = "printSingleArg"
 	static val TYPE_STRING = "string"
 	static val TYPE_VOID = "void"
 	static val im = InterfacesManager.INSTANCE
@@ -107,9 +108,10 @@ class InterfaceTests4Java extends InterfaceSpecs {
 	override s030_interfaceMethods() {
 		// Check methods
 		var methods = im.methods(GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE))
-		Assert.assertEquals(2, methods.size)
+		Assert.assertEquals(3, methods.size)
 		Assert.assertEquals(METHOD_PRINT, methods.get(0))
 		Assert.assertEquals(METHOD_DO_SOMETHING, methods.get(1))
+		Assert.assertEquals(METHOD_PRINT_SINGLE_ARG, methods.get(2))
 	}
 	
 	override s031_interfaceMethods_returnType() {
@@ -153,4 +155,23 @@ class InterfaceTests4Java extends InterfaceSpecs {
 		Assert.assertEquals("Another function which doesn't return anything", doc)
 	}
 	
+	override s040_interfaceMethodArgs() {
+		// Check method with one arg
+		var args = im.methodGetArgs(GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE), METHOD_PRINT_SINGLE_ARG)
+		Assert.assertEquals(1, args.size)
+		Assert.assertEquals("first", args.get(0))
+	}
+	
+	override s041_interfaceMethodArgs_None() {
+		// Check method without args
+		var args = im.methodGetArgs(GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE), METHOD_DO_SOMETHING)
+		Assert.assertTrue(args.empty)
+	}
+	
+	override s042_interfaceMethodArgs_Type() {
+		// Check method arg type
+		var args = im.methodGetArgs(GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE), METHOD_PRINT_SINGLE_ARG)
+		var type = im.methodGetArgType(GenCodeInputs.getTestFile(GenCodeInputs.SIMPLE), METHOD_PRINT_SINGLE_ARG, args.get(0))
+		Assert.assertEquals(TYPE_STRING, type)
+	}
 }

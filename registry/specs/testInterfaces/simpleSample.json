@@ -8,5 +8,12 @@
 		},{
 			"doc":"Another function which doesn't return anything",
 			"name":"doSomething"
+		},{
+			"doc":"Function with single argument",
+			"name":"printSingleArg",
+			"ret":"string",
+			"args": [
+				{ "name":"first", "type":"string" }
+			]
 	}]
 }

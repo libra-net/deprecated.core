@@ -44,7 +44,7 @@ public class InterfacesManager extends ShLibProcessWrapper {
 
 	public List<String> methods(File itfFile) {
 		List<String> out = Arrays.asList(execShLibFunction(loadItfShLib(), "itfMethods", itfFile.getAbsolutePath()).split(SHELL_LIST_SEPARATOR));
-		sanitizeList(out);
+		out = sanitizeList(out);
 		return out;
 	}
 
@@ -54,5 +54,15 @@ public class InterfacesManager extends ShLibProcessWrapper {
 
 	public String methodGetDoc(File itfFile, String name) {
 		return execShLibFunction(loadItfShLib(), "itfMethodGetDoc", itfFile.getAbsolutePath(), name);
+	}
+
+	public List<String> methodGetArgs(File itfFile, String name) {
+		List<String> out = Arrays.asList(execShLibFunction(loadItfShLib(), "itfMethodGetArgs", itfFile.getAbsolutePath(), name).split(SHELL_LIST_SEPARATOR));
+		out = sanitizeList(out);
+		return out;
+	}
+
+	public String methodGetArgType(File itfFile, String methodName, String argName) {
+		return execShLibFunction(loadItfShLib(), "itfMethodGetArgType", itfFile.getAbsolutePath(), methodName, argName);
 	}
 }

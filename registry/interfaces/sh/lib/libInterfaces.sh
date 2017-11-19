@@ -123,3 +123,43 @@ function itfMethodGetDoc {
 	if [ "$doc" == "" ]; then echo "Unknown method: $2" >&2; return 1; fi
 	echo $doc
 }
+
+##
+## Get required method arg names from input json file
+##
+## $1: json interface file
+## $2: method name
+##
+function itfMethodGetArgs {
+	itfValidate $1
+	local tmp=$(mktemp)
+	jq -c ".methods[] | select(.name == \"$2\") | .args" $1 > $tmp
+	if [ "$(cat $tmp)" == "null" ]; then
+		local args=""
+	else
+		jq -c ".methods[] | select(.name == \"$2\") | .args[] | .name" $1 > $tmp
+		local args=$(cat $tmp | sed -e 's|"\(.*\)"|\1|g' | xargs)
+		rm -f $tmp
+		if [ "$args" == "" ]; then echo "Unknown method: $2" >&2; return 1; fi
+	fi
+	echo $args
+}
+
+##
+## Get type name for required method arg name from input json file
+##
+## $1: json interface file
+## $2: method name
+## $3: arg name
+##
+function itfMethodGetArgType {
+	local args=$(itfMethodGetArgs $1 $2)
+	if [ "$args" == "" ]; then echo "Method has no args: $2" >&2; return 1; fi
+	local tmp=$(mktemp)
+	jq -c ".methods[] | select(.name == \"$2\") | .args[] | select(.name == \"$3\")" $1 > $tmp
+	local foundArg=$(cat $tmp)
+	if [ "$foundArg" == "" ]; then echo "Method $2 has no arg named $3" >&2; return 1; fi
+	jq -c ".methods[] | select(.name == \"$2\") | .args[] | select(.name == \"$3\") | .type" $1 > $tmp
+	cat $tmp | sed -e 's|"\(.*\)"|\1|'
+	rm -f $tmp
+}

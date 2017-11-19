@@ -5,7 +5,7 @@ package libra.itf;
  */
 public interface SimpleSample {
 	
-	String _TOKEN = "678f534f2f8c90543cda0735c85fd2c4";
+	String _TOKEN = "11eeb3b6a66a804be976eb39cc40a03c";
 	
 	/**
  	 * Simple function to get an hello world string
@@ -16,5 +16,10 @@ public interface SimpleSample {
  	 * Another function which doesn't return anything
  	 */
  	void doSomething();
+ 
+ 	/**
+ 	 * Function with single argument
+ 	 */
+ 	String printSingleArg();
  
 }

@@ -129,4 +129,39 @@ abstract class InterfaceSpecs {
 	 */
 	@Test
 	def abstract void s033_interfaceMethods_doc();
+	
+	/**
+	 * A method should have arguments, that are specified in the "args" object field.
+	 * In this object, keys are arguments names, and values are arguments types.
+	 * 
+	 * Example:
+	 "methods": [ {
+			"name":"printHello",
+			"ret":"string",
+			"args": {
+				"arg1":"string",
+				"arg2":"string"
+			}
+		} ]
+	 */
+	@Test
+	def abstract void s040_interfaceMethodArgs();
+
+	/**
+	 * A method should have no arguments
+	 * 
+	 * Example:
+	 "methods": [ {
+			"name":"doSomething"
+		} ]
+	 */
+	@Test
+	def abstract void s041_interfaceMethodArgs_None();
+
+	/**
+	 * Method args shall have a defined type.
+	 * The interface lib shall verify that used arguments types are valid.
+	 */
+	@Test
+	def abstract void s042_interfaceMethodArgs_Type();
 }
